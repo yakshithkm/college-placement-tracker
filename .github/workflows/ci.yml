@@ -94,8 +94,8 @@ jobs:
           DB_NAME: placement_tracker_test
           DB_USER: postgres
           DB_PASSWORD: postgres
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
+          JWT_SECRET: F8mQx9Lr2VvN7aZpK4cHt1YwE6sXg3RbJ5uDf8MnQ2LpCv7TkHs9WyZe4Ar6PxBj
+          JWT_REFRESH_SECRET: qR7xVm2PdK9sZn4YfLc8HtAw5JeX3BgNp6TuMr1CvQ9kDsEz7HaWvX2LpFy8RbGnM
           JWT_EXPIRES_IN: 15m
           JWT_REFRESH_EXPIRES_IN: 7d
           ALLOWED_ORIGINS: http://localhost:3000

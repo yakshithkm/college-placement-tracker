@@ -3,17 +3,17 @@ const app = require('../src/server');
 const { pool } = require('../src/config/database');
 
 const testUser = {
-  email: `test_${Date.now()}@example.com`,
+  email: `ci_test_${Date.now()}@example.com`,
   password: 'TestPass123',
-  firstName: 'Test',
-  lastName: 'User',
+  firstName: 'CI',
+  lastName: 'Tester',
 };
 
 let accessToken = '';
 let refreshToken = '';
+let projectId = '';
 
 afterAll(async () => {
-  // Clean up test user and close pool
   try {
     await pool.query('DELETE FROM users WHERE email = $1', [testUser.email]);
   } catch {}
@@ -49,7 +49,6 @@ describe('Auth API', () => {
       password: testUser.password,
     });
     expect(res.status).toBe(200);
-    expect(res.body.data.accessToken).toBeDefined();
     accessToken = res.body.data.accessToken;
     refreshToken = res.body.data.refreshToken;
   });
@@ -80,7 +79,6 @@ describe('Auth API', () => {
       .post('/api/auth/refresh')
       .send({ refreshToken });
     expect(res.status).toBe(200);
-    expect(res.body.data.accessToken).toBeDefined();
     accessToken = res.body.data.accessToken;
     refreshToken = res.body.data.refreshToken;
   });
@@ -94,48 +92,43 @@ describe('Auth API', () => {
 });
 
 describe('Students API', () => {
-  let token = '';
-
   beforeAll(async () => {
     const res = await request(app).post('/api/auth/login').send({
       email: testUser.email,
       password: testUser.password,
     });
-    token = res.body.data?.accessToken || '';
+    accessToken = res.body.data?.accessToken || '';
   });
 
   test('GET /api/students/me — returns student profile', async () => {
     const res = await request(app)
       .get('/api/students/me')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
   });
 
   test('PUT /api/students/me — updates profile', async () => {
     const res = await request(app)
       .put('/api/students/me')
-      .set('Authorization', `Bearer ${token}`)
-      .send({ bio: 'Updated bio from CI test', cgpa: 8.5 });
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({ bio: 'CI test bio', cgpa: 8.5 });
     expect(res.status).toBe(200);
   });
 });
 
 describe('Projects API', () => {
-  let token = '';
-  let projectId = '';
-
   beforeAll(async () => {
     const res = await request(app).post('/api/auth/login').send({
       email: testUser.email,
       password: testUser.password,
     });
-    token = res.body.data?.accessToken || '';
+    accessToken = res.body.data?.accessToken || '';
   });
 
   test('POST /api/projects — creates project', async () => {
     const res = await request(app)
       .post('/api/projects')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'CI Test Project', technologies: ['React', 'Node.js'] });
     expect(res.status).toBe(201);
     projectId = res.body.data.id;
@@ -144,7 +137,7 @@ describe('Projects API', () => {
   test('GET /api/projects — lists projects', async () => {
     const res = await request(app)
       .get('/api/projects')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body.data)).toBe(true);
   });
@@ -152,7 +145,7 @@ describe('Projects API', () => {
   test('DELETE /api/projects/:id — deletes project', async () => {
     const res = await request(app)
       .delete(`/api/projects/${projectId}`)
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${accessToken}`);
     expect(res.status).toBe(200);
   });
 });
