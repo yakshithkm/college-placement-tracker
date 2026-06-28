@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
 
       - name: Setup Node 22
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
@@ -36,6 +36,7 @@ jobs:
   backend-test:
     name: Backend Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     services:
       postgres:
@@ -53,18 +54,16 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
 
       - name: Setup Node 22
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
 
       - name: Install deps
         working-directory: backend
-        run: npm ci
+        run: npm install
 
       - name: Run migrations
         working-directory: backend
