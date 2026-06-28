@@ -1,0 +1,33 @@
+version: '3.9'
+
+# Development override — adds hot-reload and exposes ports
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      target: base          # uses the base stage so devDeps are available
+    command: ["node_modules/.bin/nodemon", "src/server.js"]
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: debug
+    volumes:
+      - ./backend/src:/app/src:ro          # live-reload source
+      - ./backend/.env.development:/app/.env:ro
+      - ./database:/app/../database:ro     # migration scripts
+      - uploads_data:/app/uploads
+    ports:
+      - "5000:5000"                        # expose API directly for curl/Postman
+
+  frontend:
+    # In dev, run `npm start` locally instead; or keep this for a built preview
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "3000:80"                          # convenience alias
