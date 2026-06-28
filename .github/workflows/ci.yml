@@ -75,6 +75,16 @@ jobs:
           DB_PASSWORD: postgres
         run: node src/utils/migrate.js migrate
 
+      - name: Run seeds
+        working-directory: backend
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: placement_tracker_test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: node src/utils/migrate.js seed
+
       - name: Run tests
         working-directory: backend
         env:
