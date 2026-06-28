@@ -1,5 +1,10 @@
 # PlaceTrack — College Placement Tracker
 
+![Node.js](https://img.shields.io/badge/Node.js-20-green)
+![React](https://img.shields.io/badge/React-18-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED)
+
 A full-stack, production-ready platform for tracking student placement readiness. Built with React.js, Node.js + Express, PostgreSQL, and Docker.
 
 ---
