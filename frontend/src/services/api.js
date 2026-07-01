@@ -3,6 +3,18 @@ import toast from 'react-hot-toast';
 
 const BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
+// Resolves relative file paths (like /uploads/xyz.pdf) into a URL the browser can
+// actually navigate to. In dev, CRA's proxy middleware skips full-page navigations
+// (Accept: text/html), so we point straight at the backend. In production, Nginx
+// already proxies /uploads/ correctly, so relative paths work as-is.
+export const getFileUrl = (path) => {
+  if (!path) return '';
+  if (/^https?:\/\//i.test(path)) return path;
+  const isDev = process.env.NODE_ENV === 'development';
+  const backendOrigin = isDev ? 'http://localhost:5000' : '';
+  return `${backendOrigin}${path}`;
+};
+
 const api = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { resumesAPI } from '../services/api';
+import { resumesAPI, getFileUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 function formatBytes(bytes) {
@@ -124,7 +124,7 @@ export default function ResumePage() {
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <a
-                    href={r.file_url} target="_blank" rel="noopener noreferrer"
+                    href={getFileUrl(r.file_url)} target="_blank" rel="noopener noreferrer"
                     className="btn btn-secondary btn-sm"
                   >👁 View</a>
                   {!r.is_active && (
