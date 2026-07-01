@@ -25,6 +25,14 @@ import DrivesPage from './pages/DrivesPage';
 import AdminPage from './pages/AdminPage';
 import CoordinatorPage from './pages/CoordinatorPage';
 
+// Aptitude Test Module (new quiz system — distinct from legacy /aptitude manual-score page)
+import AptitudeTestListPage from './pages/quiz/AptitudeTestListPage';
+import QuizTakingPage from './pages/quiz/QuizTakingPage';
+import QuizResultPage from './pages/quiz/QuizResultPage';
+import QuizHistoryPage from './pages/quiz/QuizHistoryPage';
+import AdminQuestionsPage from './pages/quiz/AdminQuestionsPage';
+import AdminTestsPage from './pages/quiz/AdminTestsPage';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { retry: 1, staleTime: 30000 },
@@ -61,6 +69,17 @@ function AppRoutes() {
         <Route path="/projects" element={<PrivateRoute roles={['student']}><ProjectsPage /></PrivateRoute>} />
         <Route path="/certifications" element={<PrivateRoute roles={['student']}><CertificationsPage /></PrivateRoute>} />
         <Route path="/aptitude" element={<PrivateRoute roles={['student']}><AptitudePage /></PrivateRoute>} />
+
+        {/* Aptitude Test Module (quizzes) — students */}
+        <Route path="/aptitude-tests" element={<PrivateRoute roles={['student']}><AptitudeTestListPage /></PrivateRoute>} />
+        <Route path="/aptitude-tests/take/:testId" element={<PrivateRoute roles={['student']}><QuizTakingPage /></PrivateRoute>} />
+        <Route path="/aptitude-tests/result/:attemptId" element={<PrivateRoute roles={['student', 'coordinator', 'admin']}><QuizResultPage /></PrivateRoute>} />
+        <Route path="/aptitude-tests/history" element={<PrivateRoute roles={['student']}><QuizHistoryPage /></PrivateRoute>} />
+
+        {/* Aptitude Test Module — admin/coordinator management */}
+        <Route path="/aptitude-tests/admin/questions" element={<PrivateRoute roles={['admin', 'coordinator']}><AdminQuestionsPage /></PrivateRoute>} />
+        <Route path="/aptitude-tests/admin/tests" element={<PrivateRoute roles={['admin', 'coordinator']}><AdminTestsPage /></PrivateRoute>} />
+
         <Route path="/interviews" element={<PrivateRoute roles={['student']}><InterviewPage /></PrivateRoute>} />
         <Route path="/applications" element={<PrivateRoute roles={['student']}><ApplicationsPage /></PrivateRoute>} />
         <Route path="/analytics" element={<PrivateRoute roles={['student']}><AnalyticsPage /></PrivateRoute>} />

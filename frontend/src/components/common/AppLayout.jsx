@@ -30,8 +30,11 @@ const StudentNav = () => (
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Preparation</div>
+      <NavLink to="/aptitude-tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+        <span className="nav-icon">🧮</span> Aptitude Test Module
+      </NavLink>
       <NavLink to="/aptitude" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🧮</span> Aptitude Tests
+        <span className="nav-icon">📝</span> Manual Score Log
       </NavLink>
       <NavLink to="/interviews" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
         <span className="nav-icon">🎤</span> Interview Scores
@@ -63,6 +66,15 @@ const CoordinatorNav = () => (
         <span className="nav-icon">🏢</span> Placement Drives
       </NavLink>
     </div>
+    <div className="nav-section">
+      <div className="nav-section-title">Aptitude Test Module</div>
+      <NavLink to="/aptitude-tests/admin/tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+        <span className="nav-icon">🧮</span> Manage Tests
+      </NavLink>
+      <NavLink to="/aptitude-tests/admin/questions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+        <span className="nav-icon">❓</span> Question Bank
+      </NavLink>
+    </div>
   </>
 );
 
@@ -81,6 +93,15 @@ const AdminNav = () => (
       </NavLink>
       <NavLink to="/drives" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
         <span className="nav-icon">🏢</span> Placement Drives
+      </NavLink>
+    </div>
+    <div className="nav-section">
+      <div className="nav-section-title">Aptitude Test Module</div>
+      <NavLink to="/aptitude-tests/admin/tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+        <span className="nav-icon">🧮</span> Manage Tests
+      </NavLink>
+      <NavLink to="/aptitude-tests/admin/questions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+        <span className="nav-icon">❓</span> Question Bank
       </NavLink>
     </div>
   </>

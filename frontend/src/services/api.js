@@ -160,4 +160,37 @@ export const drivesAPI = {
   getApplicants: (id) => api.get(`/drives/${id}/applicants`),
 };
 
+// Aptitude Test Module (quizzes — distinct from the legacy manual-score aptitudeAPI above)
+export const aptitudeTestAPI = {
+  // Categories
+  getCategories: () => api.get('/aptitude-test/categories'),
+  createCategory: (data) => api.post('/aptitude-test/categories', data),
+  updateCategory: (id, data) => api.put(`/aptitude-test/categories/${id}`, data),
+  deleteCategory: (id) => api.delete(`/aptitude-test/categories/${id}`),
+
+  // Questions (admin)
+  getQuestions: (params) => api.get('/aptitude-test/questions', { params }),
+  createQuestion: (data) => api.post('/aptitude-test/questions', data),
+  updateQuestion: (id, data) => api.put(`/aptitude-test/questions/${id}`, data),
+  deleteQuestion: (id) => api.delete(`/aptitude-test/questions/${id}`),
+  bulkImportQuestions: (questions) => api.post('/aptitude-test/questions/bulk-import', { questions }),
+
+  // Tests
+  getTests: (params) => api.get('/aptitude-test/tests', { params }),
+  getTestById: (id) => api.get(`/aptitude-test/tests/${id}`),
+  createTest: (data) => api.post('/aptitude-test/tests', data),
+  updateTest: (id, data) => api.put(`/aptitude-test/tests/${id}`, data),
+  deleteTest: (id) => api.delete(`/aptitude-test/tests/${id}`),
+
+  // Attempts (student)
+  startAttempt: (data) => api.post('/aptitude-test/attempt/start', data),
+  saveAnswer: (attemptId, data) => api.put(`/aptitude-test/attempt/${attemptId}/answer`, data),
+  submitAttempt: (attemptId, data) => api.post(`/aptitude-test/attempt/${attemptId}/submit`, data),
+  getAttemptResult: (attemptId) => api.get(`/aptitude-test/attempt/${attemptId}/result`),
+
+  // Analytics
+  getMyAttempts: () => api.get('/aptitude-test/my-attempts'),
+  getAdminStats: () => api.get('/aptitude-test/admin/stats'),
+};
+
 export default api;

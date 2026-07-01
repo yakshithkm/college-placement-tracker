@@ -10,6 +10,7 @@ const dataController = require('../controllers/dataController');
 const resumeController = require('../controllers/resumeController');
 const analyticsController = require('../controllers/analyticsController');
 const companyController = require('../controllers/companyController');
+const aptitudeTestRoutes = require('./aptitude');
 
 // ======================== AUTH ========================
 router.post('/auth/register', authValidators.register, authController.register);
@@ -57,6 +58,11 @@ router.delete('/certifications/:id', authenticate, dataController.deleteCertific
 router.get('/aptitude', authenticate, dataController.getAptitudeScores);
 router.post('/aptitude', authenticate, aptitudeValidators.create, dataController.createAptitudeScore);
 router.delete('/aptitude/:id', authenticate, dataController.deleteAptitudeScore);
+
+// ======================== APTITUDE TEST MODULE (quizzes) ========================
+// Mounted separately from the legacy manual-score /aptitude routes above.
+// Provides categories, question bank, admin test builder, and student attempts.
+router.use('/aptitude-test', aptitudeTestRoutes);
 
 // ======================== INTERVIEWS ========================
 router.get('/interviews', authenticate, dataController.getInterviewScores);

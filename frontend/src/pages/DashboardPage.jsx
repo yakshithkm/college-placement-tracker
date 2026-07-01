@@ -128,6 +128,7 @@ export default function DashboardPage() {
 
           {/* Stats grid */}
           <div className="stats-grid">
+            <StatCard icon="🧮" label="Aptitude Tests Taken" value={stats.quizAttemptCount} color="#0891B2" bg="#ECFEFF" link="/aptitude-tests/history" />
             <StatCard icon="🏆" label="Certifications" value={stats.certCount} color="#7C3AED" bg="#F5F3FF" link="/certifications" />
             <StatCard icon="💻" label="Projects" value={stats.projectCount} color="#059669" bg="#ECFDF5" link="/projects" />
             <StatCard icon="📋" label="Applications" value={stats.applicationCount} color="#2563EB" bg="#EFF6FF" link="/applications" />
@@ -140,10 +141,11 @@ export default function DashboardPage() {
               <h3 className="card-title">Quick Actions</h3>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
+              <QuickAction icon="🧮" title="Take Aptitude Test" desc="Attempt a quiz, build your score" to="/aptitude-tests" color="#0891B2" />
               <QuickAction icon="📄" title="Upload Resume" desc="Add a new resume version" to="/resumes" color="#2563EB" />
               <QuickAction icon="💻" title="Add Project" desc="Showcase your work" to="/projects" color="#059669" />
               <QuickAction icon="🏆" title="Add Certification" desc="Validate your skills" to="/certifications" color="#7C3AED" />
-              <QuickAction icon="🧮" title="Log Aptitude Score" desc="Track test performance" to="/aptitude" color="#EA580C" />
+              <QuickAction icon="📝" title="Log Aptitude Score" desc="Manually record a score" to="/aptitude" color="#EA580C" />
               <QuickAction icon="🎤" title="Add Interview" desc="Record mock interview" to="/interviews" color="#0891B2" />
               <QuickAction icon="🏢" title="Browse Drives" desc="Find placement opportunities" to="/drives" color="#D97706" />
             </div>
