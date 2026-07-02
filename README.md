@@ -1,103 +1,6 @@
-# PlaceTrack — College Placement Tracker
-
-![Node.js](https://img.shields.io/badge/Node.js-20-green)
-![React](https://img.shields.io/badge/React-18-blue)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
-![Docker](https://img.shields.io/badge/Docker-ready-2496ED)
-
-A full-stack, production-ready platform for tracking student placement readiness. Built with React.js, Node.js + Express, PostgreSQL, and Docker.
-
 ---
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React 18, React Router v6, TanStack Query, Chart.js |
-| Backend | Node.js 20, Express 4, JWT Auth |
-| Database | PostgreSQL 16 |
-| DevOps | Docker, Docker Compose, Nginx |
-| Auth | JWT (access + refresh tokens) |
-
----
-
-## Project Structure
-
-```
-college-placement-tracker/
-├── backend/
-│   ├── src/
-│   │   ├── config/         # DB pool config
-│   │   ├── controllers/    # Route handlers
-│   │   │   ├── authController.js
-│   │   │   ├── studentController.js
-│   │   │   ├── dataController.js       # Projects, Certs, Aptitude, Interviews, Applications
-│   │   │   ├── resumeController.js
-│   │   │   ├── analyticsController.js  # Score calculation engine
-│   │   │   └── companyController.js    # Companies & Drives
-│   │   ├── middleware/
-│   │   │   ├── auth.js         # JWT verify + role check
-│   │   │   ├── errorHandler.js
-│   │   │   └── validators.js   # express-validator rules
-│   │   ├── routes/
-│   │   │   └── index.js        # All API routes
-│   │   ├── utils/
-│   │   │   ├── jwt.js
-│   │   │   └── logger.js       # Winston
-│   │   └── server.js
-│   ├── Dockerfile
-│   ├── .env.example
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx     # Global auth state
-│   │   ├── services/
-│   │   │   └── api.js              # Axios with auto token refresh
-│   │   ├── styles/
-│   │   │   └── global.css          # Design system
-│   │   ├── components/
-│   │   │   └── common/
-│   │   │       └── AppLayout.jsx   # Sidebar + top bar
-│   │   ├── pages/
-│   │   │   ├── LandingPage.jsx
-│   │   │   ├── LoginPage.jsx
-│   │   │   ├── RegisterPage.jsx
-│   │   │   ├── DashboardPage.jsx
-│   │   │   ├── ProfilePage.jsx
-│   │   │   ├── ResumePage.jsx
-│   │   │   ├── ProjectsPage.jsx
-│   │   │   ├── CertificationsPage.jsx
-│   │   │   ├── AptitudePage.jsx
-│   │   │   ├── InterviewPage.jsx
-│   │   │   ├── ApplicationsPage.jsx
-│   │   │   ├── AnalyticsPage.jsx
-│   │   │   ├── DrivesPage.jsx
-│   │   │   ├── CoordinatorPage.jsx
-│   │   │   └── AdminPage.jsx
-│   │   ├── App.jsx
-│   │   └── index.js
-│   ├── public/
-│   ├── nginx.conf
-│   ├── Dockerfile
-│   └── package.json
-│
-├── database/
-│   ├── migrations/
-│   │   └── 001_initial_schema.sql
-│   ├── seeds/
-│   │   └── 001_seed_data.sql
-│   └── init.sh
-│
-├── docker-compose.yml
-├── .env.example
-└── README.md
-```
-
----
-
-## Quickstart
+## Quickstart (Docker)
 
 ### Prerequisites
 - Docker Desktop (or Docker + Docker Compose)
@@ -132,6 +35,38 @@ The platform will be available at **http://localhost**
 
 ---
 
+## Quickstart (Local dev, no Docker)
+
+### Backend
+```bash
+cd backend
+npm install
+cp .env.example .env   # configure DB_HOST=localhost
+npm run dev            # starts on :5000
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm start              # starts on :3000
+```
+
+### Database
+```bash
+psql -U postgres -c "CREATE DATABASE placement_tracker;"
+psql -U postgres -d placement_tracker -f database/migrations/001_initial_schema.sql
+psql -U postgres -d placement_tracker -f database/migrations/002_aptitude_module.sql
+psql -U postgres -d placement_tracker -f database/seeds/001_seed_data.sql
+```
+
+On Windows PowerShell, if you hit a `WIN1252` encoding error on the aptitude migration (it contains emoji), set the client encoding first:
+```powershell
+$env:PGCLIENTENCODING = "UTF8"
+```
+
+---
+
 ## Demo Credentials
 
 | Role | Email | Password |
@@ -142,9 +77,25 @@ The platform will be available at **http://localhost**
 
 ---
 
+## Aptitude Test Module
+
+A full exam-style aptitude testing system sits alongside the base platform: categories, a question bank, admin-built timed/practice tests, a full exam UI (question navigator, flag-for-review, auto-submit), detailed results with per-question explanations, and student analytics (trend charts, category strength).
+
+📄 Full documentation: **[docs/APTITUDE_TEST_MODULE.md](docs/APTITUDE_TEST_MODULE.md)**
+
+Quick links once running:
+- `/aptitude-tests` — student: browse & take tests
+- `/aptitude-tests/admin/tests` and `/aptitude-tests/admin/questions` — admin/coordinator: manage content
+
+This is separate from the legacy manual score log at `/aptitude`, which still works unchanged. Both feed into the same Aptitude Score bucket in the readiness formula (see below).
+
+---
+
 ## API Reference
 
-Base URL: `http://localhost/api`
+Base URL: `http://localhost/api` (Docker) or `http://localhost:5000/api` (local dev)
+
+Full endpoint reference: **[docs/API.md](docs/API.md)**
 
 ### Auth
 | Method | Endpoint | Description |
@@ -173,20 +124,39 @@ Base URL: `http://localhost/api`
 | PUT | `/resumes/:id/activate` | Set active resume |
 | DELETE | `/resumes/:id` | Delete resume |
 
-### Projects / Certifications / Aptitude / Interviews / Applications
+### Projects / Certifications / Manual Aptitude Log / Interviews / Applications
 All follow standard CRUD: `GET /` `POST /` `PUT /:id` `DELETE /:id`
 
 Endpoints:
 - `/projects`
 - `/certifications`
-- `/aptitude`
+- `/aptitude` — legacy manual score log
 - `/interviews`
 - `/applications`
+
+### Aptitude Test Module
+Base: `/api/aptitude-test`
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/categories` | any | List categories |
+| POST/PUT/DELETE | `/categories` | admin/coordinator | Manage categories |
+| GET | `/questions` | admin/coordinator | List question bank |
+| POST/PUT/DELETE | `/questions` | admin/coordinator | Manage questions |
+| POST | `/questions/bulk-import` | admin/coordinator | Bulk import via JSON |
+| GET | `/tests` | any | List tests |
+| POST/PUT/DELETE | `/tests` | admin/coordinator | Manage tests |
+| POST | `/attempt/start` | student | Start or resume an attempt |
+| PUT | `/attempt/:id/answer` | student | Save an answer mid-attempt |
+| POST | `/attempt/:id/submit` | student | Submit and auto-grade |
+| GET | `/attempt/:id/result` | any | Full result + explanations |
+| GET | `/my-attempts` | student | Attempt history + trend data |
+| GET | `/admin/stats` | admin/coordinator | Platform-wide test stats |
 
 ### Analytics
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/analytics/dashboard` | Dashboard stats |
+| GET | `/analytics/dashboard` | Dashboard stats (includes quiz attempt counts) |
 | GET | `/analytics/me` | Full analytics with trends |
 | POST | `/analytics/refresh` | Recalculate scores |
 | GET | `/analytics/coordinator` | Coordinator overview |
@@ -208,14 +178,13 @@ The **Placement Readiness Score** (0–100) is computed as a weighted average:
 
 | Component | Weight | Scoring |
 |---|---|---|
-| Academic (CGPA) | 25% | CGPA/10 × 100, minus backlog penalty |
-| Projects | 20% | 25 points per project, capped at 100 |
-| Certifications | 15% | 20 points per cert, capped at 100 |
-| Aptitude Tests | 20% | Average score percentage across tests |
+| Resume | 30% | Active resume's ATS score |
+| Aptitude | 30% | Blended average across manual score log **and** Aptitude Test Module attempts |
+| Projects | 15% | 25 points per project, capped at 100 |
+| Certifications | 10% | 20 points per certification, capped at 100 |
 | Interview Readiness | 15% | Average overall rating × 10 |
-| Skills | 5% | 10 points per skill, capped at 100 |
 
-Scores are cached in `analytics_snapshots` and refreshed on demand.
+Scores are cached in `analytics_snapshots` and recalculate automatically whenever a student submits an aptitude test attempt, or on demand via the "Refresh Score" button on the Analytics page.
 
 ---
 
@@ -226,7 +195,8 @@ Scores are cached in `analytics_snapshots` and refreshed on demand.
 - Resume upload and version management
 - Projects portfolio with tech stack
 - Certifications with verification URLs
-- Aptitude test score tracking with charts
+- **Aptitude Test Module** — timed/practice exam-style tests, question navigator, flag-for-review, auto-submit, detailed results with explanations, trend/category analytics
+- Legacy manual aptitude score log (still available)
 - Interview performance logging with radar charts
 - Placement application status tracking
 - Full analytics with trends, strengths, and recommendations
@@ -235,6 +205,7 @@ Scores are cached in `analytics_snapshots` and refreshed on demand.
 - Student readiness overview
 - Department-wise analytics
 - Create and manage placement drives
+- **Aptitude Test Module admin** — manage question bank, build tests, view attempt stats
 - View drive applicants and statistics
 
 ### Admin
@@ -244,29 +215,16 @@ Scores are cached in `analytics_snapshots` and refreshed on demand.
 
 ---
 
-## Development Setup (without Docker)
+## Deployment
 
-### Backend
-```bash
-cd backend
-npm install
-cp .env.example .env   # configure DB_HOST=localhost
-npm run dev            # starts on :5000
-```
+For a step-by-step guide to deploying on free hosting (Neon + Render + Vercel), see:
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm start              # starts on :3000
-```
+📄 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
 
-### Database
-```bash
-psql -U postgres -c "CREATE DATABASE placement_tracker;"
-psql -U postgres -d placement_tracker -f database/migrations/001_initial_schema.sql
-psql -U postgres -d placement_tracker -f database/seeds/001_seed_data.sql
-```
+Quick summary:
+1. **Database** — Neon (free serverless Postgres)
+2. **Backend** — Render (free Node web service)
+3. **Frontend** — Vercel (free static hosting)
 
 ---
 
@@ -279,6 +237,7 @@ psql -U postgres -d placement_tracker -f database/seeds/001_seed_data.sql
 - Input validation via express-validator
 - CORS whitelist
 - Role-based access control on all protected routes
+- Aptitude Test Module: server-side duplicate-submission prevention, attempts scoped to authenticated student only
 
 ---
 
@@ -288,6 +247,7 @@ psql -U postgres -d placement_tracker -f database/seeds/001_seed_data.sql
 - [ ] Set strong DB password
 - [ ] Configure `ALLOWED_ORIGINS` for your domain
 - [ ] Set `NODE_ENV=production`
-- [ ] Mount a volume for `/app/uploads` backups
-- [ ] Enable HTTPS via reverse proxy (Nginx/Traefik)
+- [ ] Enable SSL on the database connection (`DB_SSL=true`) if using a hosted Postgres provider
+- [ ] Mount a volume (or use object storage) for `/app/uploads` — local disk storage does not persist on most free hosting tiers
+- [ ] Enable HTTPS via reverse proxy (Nginx/Traefik) or hosting provider's built-in HTTPS
 - [ ] Set up PostgreSQL backups
