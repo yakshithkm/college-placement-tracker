@@ -1,3 +1,114 @@
+# PlaceTrack — College Placement Tracker
+
+![Node.js](https://img.shields.io/badge/Node.js-20-green)
+![React](https://img.shields.io/badge/React-18-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED)
+
+A full-stack, production-ready platform for tracking student placement readiness. Built with React.js, Node.js + Express, PostgreSQL, and Docker.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, React Router v6, TanStack Query, Chart.js |
+| Backend | Node.js 20, Express 4, JWT Auth |
+| Database | PostgreSQL 16 |
+| DevOps | Docker, Docker Compose, Nginx |
+| Auth | JWT (access + refresh tokens) |
+
+---
+
+## Project Structure
+```
+college-placement-tracker/
+├── backend/
+│   ├── src/
+│   │   ├── config/         # DB pool config
+│   │   ├── controllers/    # Route handlers
+│   │   │   ├── authController.js
+│   │   │   ├── studentController.js
+│   │   │   ├── dataController.js       # Projects, Certs, Manual Aptitude Log, Interviews, Applications
+│   │   │   ├── aptitudeTestController.js  # Aptitude Test Module (categories, questions, tests, attempts)
+│   │   │   ├── resumeController.js
+│   │   │   ├── analyticsController.js  # Score calculation engine
+│   │   │   └── companyController.js    # Companies & Drives
+│   │   ├── middleware/
+│   │   │   ├── auth.js         # JWT verify + role check
+│   │   │   ├── errorHandler.js
+│   │   │   └── validators.js   # express-validator rules
+│   │   ├── routes/
+│   │   │   ├── index.js        # All API routes
+│   │   │   └── aptitude.js     # Aptitude Test Module routes
+│   │   ├── utils/
+│   │   │   ├── jwt.js
+│   │   │   └── logger.js       # Winston
+│   │   └── server.js
+│   ├── Dockerfile
+│   ├── .env.example
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx     # Global auth state
+│   │   ├── services/
+│   │   │   └── api.js              # Axios with auto token refresh
+│   │   ├── styles/
+│   │   │   └── global.css          # Design system
+│   │   ├── components/
+│   │   │   └── common/
+│   │   │       └── AppLayout.jsx   # Sidebar + top bar
+│   │   ├── pages/
+│   │   │   ├── LandingPage.jsx
+│   │   │   ├── LoginPage.jsx
+│   │   │   ├── RegisterPage.jsx
+│   │   │   ├── DashboardPage.jsx
+│   │   │   ├── ProfilePage.jsx
+│   │   │   ├── ResumePage.jsx
+│   │   │   ├── ProjectsPage.jsx
+│   │   │   ├── CertificationsPage.jsx
+│   │   │   ├── AptitudePage.jsx        # Legacy manual score log
+│   │   │   ├── InterviewPage.jsx
+│   │   │   ├── ApplicationsPage.jsx
+│   │   │   ├── AnalyticsPage.jsx
+│   │   │   ├── DrivesPage.jsx
+│   │   │   ├── CoordinatorPage.jsx
+│   │   │   ├── AdminPage.jsx
+│   │   │   └── quiz/                   # Aptitude Test Module pages
+│   │   │       ├── AptitudeTestListPage.jsx
+│   │   │       ├── QuizTakingPage.jsx
+│   │   │       ├── QuizResultPage.jsx
+│   │   │       ├── QuizHistoryPage.jsx
+│   │   │       ├── AdminQuestionsPage.jsx
+│   │   │       └── AdminTestsPage.jsx
+│   │   ├── App.jsx
+│   │   └── index.js
+│   ├── public/
+│   ├── nginx.conf
+│   ├── Dockerfile
+│   └── package.json
+│
+├── database/
+│   ├── migrations/
+│   │   ├── 001_initial_schema.sql
+│   │   └── 002_aptitude_module.sql     # Aptitude Test Module schema + seed data
+│   ├── seeds/
+│   │   └── 001_seed_data.sql
+│   └── init.sh
+│
+├── docs/
+│   ├── API.md
+│   ├── DEPLOYMENT.md
+│   └── APTITUDE_TEST_MODULE.md
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
+
 ---
 
 ## Quickstart (Docker)
