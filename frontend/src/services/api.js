@@ -3,15 +3,21 @@ import toast from 'react-hot-toast';
 
 const BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
-// Resolves relative file paths (like /uploads/xyz.pdf) into a URL the browser can
-// actually navigate to. In dev, CRA's proxy middleware skips full-page navigations
-// (Accept: text/html), so we point straight at the backend. In production, Nginx
-// already proxies /uploads/ correctly, so relative paths work as-is.
 export const getFileUrl = (path) => {
   if (!path) return '';
   if (/^https?:\/\//i.test(path)) return path;
-  const isDev = process.env.NODE_ENV === 'development';
-  const backendOrigin = isDev ? 'http://localhost:5000' : '';
+
+  let backendOrigin;
+  if (BASE_URL.startsWith('http')) {
+    // REACT_APP_API_URL was set to a full URL (e.g. Render backend) — strip trailing /api
+    backendOrigin = BASE_URL.replace(/\/api\/?$/, '');
+  } else if (process.env.NODE_ENV === 'development') {
+    // Local dev with no REACT_APP_API_URL set — CRA proxy doesn't forward full-page navigations
+    backendOrigin = 'http://localhost:5000';
+  } else {
+    // Production behind a same-origin reverse proxy (e.g. Docker + Nginx) — relative path works
+    backendOrigin = '';
+  }
   return `${backendOrigin}${path}`;
 };
 
