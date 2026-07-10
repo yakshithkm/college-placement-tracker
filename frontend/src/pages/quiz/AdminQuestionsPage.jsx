@@ -165,12 +165,12 @@ export default function AdminQuestionsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Question Management</div>
           <div className="page-subtitle">Manage the aptitude question bank</div>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button className="btn btn-secondary" onClick={() => setShowImport(true)}>📥 Bulk Import (JSON)</button>
           <button className="btn btn-primary" onClick={() => setModal('add')}>+ Add Question</button>
         </div>

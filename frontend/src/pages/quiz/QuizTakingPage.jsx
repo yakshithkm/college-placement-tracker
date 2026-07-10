@@ -173,7 +173,7 @@ export default function QuizTakingPage() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 20 }}>
+      <div className="quiz-layout">
         {/* Question panel */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
@@ -236,7 +236,7 @@ export default function QuizTakingPage() {
         {/* Navigation panel */}
         <div className="card" style={{ alignSelf: 'flex-start' }}>
           <div className="card-header"><h3 className="card-title" style={{ fontSize: 14 }}>Question Navigator</h3></div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8, marginBottom: 18 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(36px, 1fr))', gap: 8, marginBottom: 18 }}>
             {questions.map((q, idx) => {
               const status = idx === currentIdx ? 'current' : getStatus(idx);
               const colors = statusColors[status];

@@ -107,7 +107,7 @@ export default function DrivesPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Placement Drives</div>
           <div className="page-subtitle">Browse and apply to active placement drives</div>
@@ -131,7 +131,7 @@ export default function DrivesPage() {
           <p>{isCoord ? 'Create the first placement drive' : 'Check back soon for placement opportunities'}</p>
         </div></div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
           {drives.map(d => {
             const isPast = d.registration_deadline && new Date(d.registration_deadline) < new Date();
             return (
@@ -159,7 +159,7 @@ export default function DrivesPage() {
                   {d.drive_date && <div>📅 Drive: {new Date(d.drive_date).toLocaleDateString()}</div>}
                 </div>
 
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {user?.role === 'student' && d.status === 'active' && !isPast && (
                     <button className="btn btn-primary btn-sm" onClick={() => applyMutation.mutate({ driveId: d.id, role: d.role })} disabled={applyMutation.isPending}>
                       Apply Now

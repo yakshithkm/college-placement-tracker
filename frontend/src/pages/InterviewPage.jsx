@@ -66,7 +66,7 @@ export default function InterviewPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Interview Performance</div>
           <div className="page-subtitle">Track mock and real interview results to build readiness</div>
@@ -121,7 +121,7 @@ export default function InterviewPage() {
       )}
 
       {scores.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 20, marginBottom: 24 }}>
+        <div className="grid-2-uneven" style={{ marginBottom: 24 }}>
           <div className="card">
             <div className="card-header"><h3 className="card-title">Skill Radar</h3></div>
             <div className="chart-container">
@@ -130,7 +130,7 @@ export default function InterviewPage() {
           </div>
           <div className="card">
             <div className="card-header"><h3 className="card-title">Performance Summary</h3></div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="grid-2-sm">
               {[
                 { label: 'Avg Communication', val: parseFloat(stats.avg_comm || 0).toFixed(1), color: '#2563EB' },
                 { label: 'Avg Technical', val: parseFloat(stats.avg_tech || 0).toFixed(1), color: '#059669' },
@@ -171,7 +171,7 @@ export default function InterviewPage() {
                     <td>{s.technical_rating ?? '—'}/10</td>
                     <td>{s.hr_rating ?? '—'}/10</td>
                     <td><strong style={{ color: s.overall_rating >= 7 ? 'var(--color-success)' : 'var(--color-warning)' }}>{s.overall_rating ? parseFloat(s.overall_rating).toFixed(1) : '—'}</strong></td>
-                    <td style={{ maxWidth: 160, fontSize: 12, color: 'var(--text-muted)' }}>{s.feedback?.slice(0, 60) || '—'}{s.feedback?.length > 60 && '...'}</td>
+                    <td style={{ maxWidth: 160, fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.feedback?.slice(0, 60) || '—'}{s.feedback?.length > 60 && '...'}</td>
                     <td><button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(s.id)}>🗑</button></td>
                   </tr>
                 ))}

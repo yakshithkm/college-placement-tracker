@@ -50,7 +50,7 @@ export default function QuizHistoryPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Aptitude Test Analytics</div>
           <div className="page-subtitle">Your complete test history and performance trends</div>

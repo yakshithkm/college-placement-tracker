@@ -105,7 +105,7 @@ export default function DashboardPage() {
                 Your score is computed from academics, projects, certifications, aptitude, and interview performance.
                 {stats.readinessScore < 70 && ' Keep adding achievements to improve your score.'}
               </p>
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <Link to="/analytics" className="btn btn-primary btn-sm">View Full Analytics</Link>
                 <Link to="/profile" className="btn btn-secondary btn-sm">Update Profile</Link>
               </div>

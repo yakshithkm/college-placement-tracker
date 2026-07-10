@@ -100,7 +100,7 @@ export default function ApplicationsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Placement Applications</div>
           <div className="page-subtitle">Track your job applications and their progress</div>
@@ -153,7 +153,7 @@ export default function ApplicationsPage() {
                       <td>{new Date(a.applied_date).toLocaleDateString()}</td>
                       <td><span className={`badge ${cfg.class}`}>{cfg.icon} {cfg.label}</span></td>
                       <td>{a.package_offered ? `${a.package_offered} LPA` : '—'}</td>
-                      <td style={{ maxWidth: 140, fontSize: 12, color: 'var(--text-muted)' }}>{a.notes?.slice(0, 50) || '—'}</td>
+                      <td style={{ maxWidth: 140, fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.notes?.slice(0, 50) || '—'}</td>
                       <td>
                         <div style={{ display: 'flex', gap: 6 }}>
                           <button className="btn btn-secondary btn-sm" onClick={() => setModal(a)}>Edit</button>

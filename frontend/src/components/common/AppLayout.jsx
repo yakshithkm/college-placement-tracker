@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import HamburgerIcon from './HamburgerIcon';
 
 const StudentNav = () => (
   <>
@@ -117,14 +118,19 @@ export default function AppLayout() {
     navigate('/login');
   };
 
+  const closeSidebar = () => setSidebarOpen(false);
+
+  // Event delegation: close the mobile sidebar whenever a nav link inside it is clicked
+  const handleSidebarNavClick = (e) => {
+    if (e.target.closest('a')) closeSidebar();
+  };
+
   return (
     <div className="app-layout">
-      {sidebarOpen && (
-        <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 99 }}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      <div
+        className={`sidebar-overlay ${sidebarOpen ? 'visible' : ''}`}
+        onClick={closeSidebar}
+      />
 
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-logo">
@@ -135,7 +141,7 @@ export default function AppLayout() {
           </div>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" onClick={handleSidebarNavClick}>
           {user?.role === 'student' && <StudentNav />}
           {user?.role === 'coordinator' && <CoordinatorNav />}
           {user?.role === 'admin' && <AdminNav />}
@@ -159,15 +165,11 @@ export default function AppLayout() {
 
       <div className="main-content">
         <header className="top-bar">
-          <button
-            className="btn btn-secondary btn-sm"
-            style={{ display: 'none' }}
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            ☰
-          </button>
-          <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
-            Welcome, <strong>{user?.firstName}</strong>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <HamburgerIcon open={sidebarOpen} onClick={() => setSidebarOpen(o => !o)} />
+            <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
+              Welcome, <strong>{user?.firstName}</strong>
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span className="badge badge-blue" style={{ textTransform: 'capitalize' }}>{user?.role}</span>

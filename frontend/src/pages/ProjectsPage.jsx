@@ -105,7 +105,7 @@ export default function ProjectsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Projects</div>
           <div className="page-subtitle">Showcase your technical work and achievements</div>
@@ -125,7 +125,7 @@ export default function ProjectsPage() {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
           {projects.map(p => (
             <div key={p.id} className="card" style={{ position: 'relative', borderTop: p.is_featured ? '3px solid var(--color-primary)' : undefined }}>
               {p.is_featured && (
@@ -145,12 +145,12 @@ export default function ProjectsPage() {
                     ))}
                   </div>
                 )}
-                <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                   {p.github_url && <a href={p.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">⌥ GitHub</a>}
                   {p.live_url && <a href={p.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">🔗 Live</a>}
                 </div>
               </div>
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, display: 'flex', gap: 8, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                 <button className="btn btn-secondary btn-sm" onClick={() => setModal(p)}>Edit</button>
                 <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete project?') && deleteMutation.mutate(p.id)}>Delete</button>
               </div>

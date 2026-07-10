@@ -12,7 +12,7 @@ function ScoreGauge({ score, label, color }) {
   const offset = circumference - (Math.min(score, 100) / 100) * circumference;
   return (
     <div style={{ textAlign: 'center' }}>
-      <svg width="128" height="128">
+      <svg viewBox="0 0 128 128" style={{ width: '100%', maxWidth: 128, height: 'auto' }}>
         <circle cx="64" cy="64" r="54" fill="none" stroke="#E2E8F0" strokeWidth="10" />
         <circle cx="64" cy="64" r="54" fill="none" stroke={color} strokeWidth="10"
           strokeDasharray={circumference} strokeDashoffset={offset}
@@ -89,7 +89,7 @@ export default function AnalyticsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Placement Analytics</div>
           <div className="page-subtitle">Your comprehensive readiness analysis</div>
@@ -101,7 +101,7 @@ export default function AnalyticsPage() {
 
       {/* Main score + sub gauges */}
       <div className="card" style={{ marginBottom: 20 }}>
-        <div style={{ display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="analytics-score-row">
           <div style={{ textAlign: 'center' }}>
             <svg width="180" height="180">
               <circle cx="90" cy="90" r="78" fill="none" stroke="#E2E8F0" strokeWidth="12" />
@@ -116,7 +116,7 @@ export default function AnalyticsPage() {
               <text x="90" y="102" textAnchor="middle" fontSize="12" fill="#94A3B8" fontFamily="Inter">Readiness Score</text>
             </svg>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, flex: 1 }}>
+          <div className="analytics-gauges-grid">
             {scores.map(s => (
               <ScoreGauge key={s.key} score={current[s.key] || 0} label={s.label} color={s.color} />
             ))}

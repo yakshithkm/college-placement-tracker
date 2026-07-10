@@ -68,7 +68,7 @@ export default function AptitudePage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Aptitude Tests</div>
           <div className="page-subtitle">Track your quantitative, logical, and verbal performance</div>
@@ -92,7 +92,7 @@ export default function AptitudePage() {
               <input className="form-input" type="date" required value={form.testDate} onChange={set('testDate')} />
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          <div className="grid-4">
             {['quantitative', 'logical', 'verbal'].map(k => (
               <div key={k} className="form-group">
                 <label className="form-label" style={{ textTransform: 'capitalize' }}>{k}</label>

@@ -74,7 +74,7 @@ export default function ProfilePage() {
       <div className="page-title">My Profile</div>
       <div className="page-subtitle">Keep your profile updated for the best placement readiness score</div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+      <div className="grid-2" style={{ marginBottom: 20 }}>
         {/* Personal Info */}
         <div className="card">
           <div className="card-header"><h3 className="card-title">Personal Information</h3></div>

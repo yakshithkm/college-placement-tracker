@@ -108,13 +108,13 @@ export default function ResumePage() {
               <div key={r.id} style={{
                 display: 'flex', alignItems: 'center', gap: 16, padding: '16px 20px',
                 border: `1px solid ${r.is_active ? 'var(--color-primary)' : 'var(--border-color)'}`,
-                borderRadius: 8,
+                borderRadius: 8, flexWrap: 'wrap',
                 background: r.is_active ? 'var(--color-primary-light)' : 'var(--bg-primary)',
               }}>
                 <div style={{ fontSize: 28 }}>📄</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontWeight: 600, fontSize: 15 }}>{r.version_name}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
+                    <span style={{ fontWeight: 600, fontSize: 15, wordBreak: 'break-word' }}>{r.version_name}</span>
                     {r.is_active && <span className="badge badge-blue">✓ Active</span>}
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
@@ -122,7 +122,7 @@ export default function ResumePage() {
                     {r.score && <> · ATS Score: <strong>{r.score}</strong></>}
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <a
                     href={getFileUrl(r.file_url)} target="_blank" rel="noopener noreferrer"
                     className="btn btn-secondary btn-sm"

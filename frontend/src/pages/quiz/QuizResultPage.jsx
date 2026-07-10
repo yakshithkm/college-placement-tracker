@@ -31,7 +31,7 @@ export default function QuizResultPage() {
           background: passed ? 'var(--color-success-light)' : 'var(--color-danger-light)',
           border: `4px solid ${passed ? 'var(--color-success)' : 'var(--color-danger)'}`,
         }}>
-          <div style={{ fontSize: 28, fontWeight: 800, color: passed ? 'var(--color-success)' : 'var(--color-danger)' }}>{attempt.percentage}%</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: passed ? 'var(--color-success)' : 'var(--color-danger)' }}>{attempt.percentage}%</div>
         </div>
         <h2 style={{ fontSize: 22, marginBottom: 6 }}>{passed ? '🎉 You Passed!' : '📚 Keep Practicing'}</h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
@@ -88,7 +88,7 @@ export default function QuizResultPage() {
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 12, lineHeight: 1.6 }}>{a.question_text}</div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 10 }}>
+                <div className="grid-2-sm" style={{ marginBottom: 10 }}>
                   {['A', 'B', 'C', 'D'].map(opt => {
                     const text = a[`option_${opt.toLowerCase()}`];
                     const isCorrectOpt = opt === a.correct_answer;
@@ -120,7 +120,7 @@ export default function QuizResultPage() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
+      <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
         <Link to="/aptitude-tests" className="btn btn-primary">← Back to Tests</Link>
         <Link to="/aptitude-tests/history" className="btn btn-secondary">📊 View My Analytics</Link>
       </div>

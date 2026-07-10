@@ -88,7 +88,7 @@ export default function CertificationsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div className="page-title">Certifications</div>
           <div className="page-subtitle">Track your professional certifications and courses</div>
@@ -108,7 +108,7 @@ export default function CertificationsPage() {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
           {certs.map(c => {
             const color = getCertColor(c.provider);
             const isExpired = c.expiry_date && new Date(c.expiry_date) < new Date();
@@ -127,7 +127,7 @@ export default function CertificationsPage() {
                   </div>
                 </div>
                 {isExpired && <span className="badge badge-red" style={{ marginTop: 10, display: 'inline-flex' }}>Expired</span>}
-                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, marginTop: 12, display: 'flex', gap: 8 }}>
+                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {c.verification_url && <a href={c.verification_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">🔗 Verify</a>}
                   <button className="btn btn-secondary btn-sm" onClick={() => setModal(c)}>Edit</button>
                   <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(c.id)}>Delete</button>

@@ -61,7 +61,7 @@ export function CoordinatorPage() {
                 <tbody>
                   {stats.recentDrives.map((d, i) => (
                     <tr key={i}>
-                      <td style={{ maxWidth: 140, fontSize: 13 }}>{d.title}</td>
+                      <td style={{ maxWidth: 140, fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.title}</td>
                       <td style={{ fontSize: 13 }}>{d.company}</td>
                       <td><span className={`badge ${d.status === 'active' ? 'badge-green' : d.status === 'upcoming' ? 'badge-blue' : 'badge-gray'}`} style={{ textTransform: 'capitalize' }}>{d.status}</span></td>
                       <td>{d.applicants}</td>

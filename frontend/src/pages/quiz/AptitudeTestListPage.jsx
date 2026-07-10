@@ -56,7 +56,7 @@ export default function AptitudeTestListPage() {
           <p>Check back soon for new aptitude tests</p>
         </div></div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 18 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 18 }}>
           {tests.map(t => (
             <div key={t.id} className="card" style={{ borderTop: `3px solid ${t.category_color || '#2563EB'}` }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 12 }}>
@@ -75,7 +75,7 @@ export default function AptitudeTestListPage() {
                 {t.allow_practice_mode && <span className="badge badge-green">🧘 Practice available</span>}
               </div>
 
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 {t.timer_enabled && (
                   <button className="btn btn-primary btn-sm" onClick={() => navigate(`/aptitude-tests/take/${t.id}?mode=timed`)}>
                     ⏱ Start Timed
