@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { aptitudeTestAPI } from '../../services/api';
 import toast from 'react-hot-toast';
+import { Timer, BookOpen, CheckCircle2, Trash2 } from 'lucide-react';
+import { getCategoryIcon } from '../../utils/categoryIcon';
 
 const emptyForm = {
   title: '', description: '', categoryId: '', totalMarks: 10, passingMarks: 5,
@@ -68,7 +70,7 @@ function TestModal({ test, categories, onClose }) {
               <label className="form-label">Category</label>
               <select className="form-select" value={form.categoryId} onChange={set('categoryId')}>
                 <option value="">Mixed / All categories</option>
-                {categories.map(c => <option key={c.id} value={c.id}>{c.icon} {c.name}</option>)}
+                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
 
@@ -171,20 +173,20 @@ export default function AdminTestsPage() {
                 {tests.map(t => (
                   <tr key={t.id}>
                     <td><strong>{t.title}</strong></td>
-                    <td>{t.category_icon} {t.category_name || 'Mixed'}</td>
+                    <td style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{getCategoryIcon(t.category_name, { size: 15 })} {t.category_name || 'Mixed'}</td>
                     <td>{t.actual_question_count}</td>
                     <td>{t.total_marks} (pass: {t.passing_marks})</td>
-                    <td>{t.timer_enabled ? `⏱ ${t.duration_minutes}m` : '🧘 Practice only'}</td>
+                    <td style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{t.timer_enabled ? <><Timer size={13} /> {t.duration_minutes}m</> : <><BookOpen size={13} /> Practice only</>}</td>
                     <td>
                       <span className={`badge ${t.is_active ? 'badge-green' : 'badge-gray'}`} style={{ cursor: 'pointer' }}
                         onClick={() => toggleActiveMutation.mutate({ id: t.id, isActive: !t.is_active })}>
-                        {t.is_active ? '✓ Active' : 'Inactive'}
+                        {t.is_active ? <><CheckCircle2 size={12} style={{ verticalAlign: -2, marginRight: 3 }} />Active</> : 'Inactive'}
                       </span>
                     </td>
                     <td>
                       <div style={{ display: 'flex', gap: 6 }}>
                         <button className="btn btn-secondary btn-sm" onClick={() => setModal(t)}>Edit</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete test?') && deleteMutation.mutate(t.id)}>🗑</button>
+                        <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete test?') && deleteMutation.mutate(t.id)}><Trash2 size={14} /></button>
                       </div>
                     </td>
                   </tr>

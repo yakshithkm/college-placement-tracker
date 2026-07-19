@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { applicationsAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import { Send, CheckCircle2, CalendarClock, PartyPopper, XCircle, ClipboardList, Trash2 } from 'lucide-react';
 
 const STATUS_CONFIG = {
-  applied: { label: 'Applied', class: 'badge-blue', icon: '📤' },
-  test_cleared: { label: 'Test Cleared', class: 'badge-yellow', icon: '✅' },
-  interview_scheduled: { label: 'Interview Scheduled', class: 'badge-purple', icon: '📅' },
-  selected: { label: 'Selected 🎉', class: 'badge-green', icon: '🎊' },
-  rejected: { label: 'Rejected', class: 'badge-red', icon: '❌' },
+  applied: { label: 'Applied', class: 'badge-blue', icon: <Send size={13} /> },
+  test_cleared: { label: 'Test Cleared', class: 'badge-yellow', icon: <CheckCircle2 size={13} /> },
+  interview_scheduled: { label: 'Interview Scheduled', class: 'badge-purple', icon: <CalendarClock size={13} /> },
+  selected: { label: 'Selected', class: 'badge-green', icon: <PartyPopper size={13} /> },
+  rejected: { label: 'Rejected', class: 'badge-red', icon: <XCircle size={13} /> },
 };
 
 const emptyForm = { companyName: '', role: '', appliedDate: '', status: 'applied', notes: '' };
@@ -132,7 +133,7 @@ export default function ApplicationsPage() {
           <div className="page-loading"><div className="loading-spinner" /></div>
         ) : apps.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">📋</div>
+            <div className="empty-state-icon"><ClipboardList /></div>
             <h3>No applications {filter ? 'with this status' : 'yet'}</h3>
             <p>Start tracking your placement applications</p>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => setModal('add')}>Add Application</button>
@@ -151,13 +152,13 @@ export default function ApplicationsPage() {
                       <td><strong>{a.company_name || a.company_full_name || '—'}</strong></td>
                       <td>{a.role}</td>
                       <td>{new Date(a.applied_date).toLocaleDateString()}</td>
-                      <td><span className={`badge ${cfg.class}`}>{cfg.icon} {cfg.label}</span></td>
+                      <td><span className={`badge ${cfg.class}`} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>{cfg.icon} {cfg.label}</span></td>
                       <td>{a.package_offered ? `${a.package_offered} LPA` : '—'}</td>
                       <td style={{ maxWidth: 140, fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.notes?.slice(0, 50) || '—'}</td>
                       <td>
                         <div style={{ display: 'flex', gap: 6 }}>
                           <button className="btn btn-secondary btn-sm" onClick={() => setModal(a)}>Edit</button>
-                          <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(a.id)}>🗑</button>
+                          <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(a.id)}><Trash2 size={14} /></button>
                         </div>
                       </td>
                     </tr>

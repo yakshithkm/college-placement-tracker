@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { aptitudeTestAPI } from '../../services/api';
+import { PartyPopper, BookOpen, Check, X, Lightbulb, ArrowLeft, BarChart3 } from 'lucide-react';
 
 export default function QuizResultPage() {
   const { attemptId } = useParams();
@@ -33,7 +34,7 @@ export default function QuizResultPage() {
         }}>
           <div style={{ fontSize: 22, fontWeight: 800, color: passed ? 'var(--color-success)' : 'var(--color-danger)' }}>{attempt.percentage}%</div>
         </div>
-        <h2 style={{ fontSize: 22, marginBottom: 6 }}>{passed ? '🎉 You Passed!' : '📚 Keep Practicing'}</h2>
+        <h2 style={{ fontSize: 22, marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>{passed ? <><PartyPopper size={22} /> You Passed!</> : <><BookOpen size={22} /> Keep Practicing</>}</h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
           You scored <strong>{attempt.score}</strong> out of <strong>{attempt.total_marks}</strong> marks
           {' '}(Passing: {attempt.passing_marks})
@@ -75,8 +76,8 @@ export default function QuizResultPage() {
           {answers.map((a, idx) => {
             const status = !a.selected_answer ? 'skipped' : a.is_correct ? 'correct' : 'wrong';
             const statusConfig = {
-              correct: { badge: 'badge-green', label: '✓ Correct', color: 'var(--color-success)' },
-              wrong: { badge: 'badge-red', label: '✗ Wrong', color: 'var(--color-danger)' },
+              correct: { badge: 'badge-green', label: <><Check size={12} style={{ verticalAlign: -2 }} /> Correct</>, color: 'var(--color-success)' },
+              wrong: { badge: 'badge-red', label: <><X size={12} style={{ verticalAlign: -2 }} /> Wrong</>, color: 'var(--color-danger)' },
               skipped: { badge: 'badge-gray', label: '— Skipped', color: 'var(--text-muted)' },
             }[status];
 
@@ -99,7 +100,7 @@ export default function QuizResultPage() {
                     return (
                       <div key={opt} style={{ padding: '8px 12px', borderRadius: 6, border: `1px solid ${border}`, background: bg, fontSize: 12, color: textColor, display: 'flex', alignItems: 'center', gap: 6 }}>
                         <strong>{opt}.</strong> {text}
-                        {isCorrectOpt && ' ✓'}
+                        {isCorrectOpt && <Check size={13} style={{ verticalAlign: -2 }} />}
                         {isSelectedOpt && !isCorrectOpt && ' (your answer)'}
                       </div>
                     );
@@ -108,7 +109,7 @@ export default function QuizResultPage() {
 
                 {a.explanation && (
                   <div style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '10px 12px', borderRadius: 6, lineHeight: 1.6 }}>
-                    💡 <strong>Explanation:</strong> {a.explanation}
+                    <Lightbulb size={13} style={{ verticalAlign: -2, marginRight: 4 }} /><strong>Explanation:</strong> {a.explanation}
                   </div>
                 )}
                 <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 8 }}>
@@ -121,8 +122,8 @@ export default function QuizResultPage() {
       </div>
 
       <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
-        <Link to="/aptitude-tests" className="btn btn-primary">← Back to Tests</Link>
-        <Link to="/aptitude-tests/history" className="btn btn-secondary">📊 View My Analytics</Link>
+        <Link to="/aptitude-tests" className="btn btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={15} /> Back to Tests</Link>
+        <Link to="/aptitude-tests/history" className="btn btn-secondary" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><BarChart3 size={15} /> View My Analytics</Link>
       </div>
     </div>
   );

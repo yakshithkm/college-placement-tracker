@@ -4,6 +4,7 @@ import { analyticsAPI } from '../services/api';
 import { Doughnut, Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, LineElement, BarElement, PointElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import toast from 'react-hot-toast';
+import { Dumbbell, TriangleAlert, CheckCircle2, PartyPopper, Lightbulb } from 'lucide-react';
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, LineElement, BarElement, PointElement, Title, Tooltip, Legend, Filler);
 
@@ -150,39 +151,39 @@ export default function AnalyticsPage() {
       {/* Strengths & Weaknesses */}
       <div className="grid-2">
         <div className="card">
-          <div className="card-header"><h3 className="card-title">💪 Strengths</h3></div>
+          <div className="card-header"><h3 className="card-title" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Dumbbell size={17} /> Strengths</h3></div>
           {current.strengthAreas?.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {current.strengthAreas.map(area => (
                 <div key={area} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--color-success-light)', borderRadius: 8, color: 'var(--color-success)', fontWeight: 500, fontSize: 14 }}>
-                  ✅ {area}
+                  <CheckCircle2 size={15} style={{ flexShrink: 0 }} /> {area}
                 </div>
               ))}
             </div>
           ) : <div style={{ color: 'var(--text-muted)', fontSize: 14 }}>Build your profile to identify strengths</div>}
         </div>
         <div className="card">
-          <div className="card-header"><h3 className="card-title">🚧 Areas to Improve</h3></div>
+          <div className="card-header"><h3 className="card-title" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><TriangleAlert size={17} /> Areas to Improve</h3></div>
           {current.weakAreas?.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {current.weakAreas.map(area => (
                 <div key={area} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--color-warning-light)', borderRadius: 8, color: 'var(--color-warning)', fontWeight: 500, fontSize: 14 }}>
-                  ⚠️ {area}
+                  <TriangleAlert size={15} style={{ flexShrink: 0 }} /> {area}
                 </div>
               ))}
             </div>
-          ) : <div style={{ color: 'var(--text-muted)', fontSize: 14 }}>No weak areas — excellent work! 🎉</div>}
+          ) : <div style={{ color: 'var(--text-muted)', fontSize: 14, display: "inline-flex", alignItems: "center", gap: 6 }}>No weak areas — excellent work! <PartyPopper size={15} /></div>}
         </div>
       </div>
 
       {/* Recommendations */}
       {current.recommendations?.length > 0 && (
         <div className="card" style={{ marginTop: 20 }}>
-          <div className="card-header"><h3 className="card-title">💡 Recommendations</h3></div>
+          <div className="card-header"><h3 className="card-title" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Lightbulb size={17} /> Recommendations</h3></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {current.recommendations.map((rec, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 16px', background: 'var(--color-primary-light)', borderRadius: 8, border: '1px solid #BFDBFE' }}>
-                <span style={{ fontSize: 18, flexShrink: 0 }}>💡</span>
+                <Lightbulb size={18} style={{ flexShrink: 0, color: "var(--color-primary)" }} />
                 <span style={{ fontSize: 14, color: 'var(--color-primary)', fontWeight: 500 }}>{rec.message}</span>
               </div>
             ))}

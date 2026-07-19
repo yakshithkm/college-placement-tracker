@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { aptitudeTestAPI } from '../../services/api';
 import { Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, BarElement, PointElement, Tooltip, Legend, Filler } from 'chart.js';
+import { ClipboardList, Check, X } from 'lucide-react';
+import { getCategoryIcon } from '../../utils/categoryIcon';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, BarElement, PointElement, Tooltip, Legend, Filler);
 
@@ -82,7 +84,7 @@ export default function QuizHistoryPage() {
         <div className="card-header"><h3 className="card-title">Attempt History</h3></div>
         {attempts.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">📝</div>
+            <div className="empty-state-icon"><ClipboardList /></div>
             <h3>No attempts yet</h3>
             <p>Take your first aptitude test to start tracking progress</p>
             <Link to="/aptitude-tests" className="btn btn-primary" style={{ marginTop: 16 }}>Browse Tests</Link>
@@ -97,10 +99,10 @@ export default function QuizHistoryPage() {
                 {attempts.map(a => (
                   <tr key={a.id}>
                     <td><strong>{a.test_title}</strong></td>
-                    <td>{a.category_icon} {a.category_name || 'Mixed'}</td>
+                    <td style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{getCategoryIcon(a.category_name, { size: 15 })} {a.category_name || 'Mixed'}</td>
                     <td><span className="badge badge-gray" style={{ textTransform: 'capitalize' }}>{a.mode}</span></td>
                     <td><strong style={{ color: a.percentage >= 70 ? 'var(--color-success)' : a.percentage >= 40 ? 'var(--color-warning)' : 'var(--color-danger)' }}>{a.percentage}%</strong> ({a.score}/{a.total_marks})</td>
-                    <td><span className={`badge ${a.passed ? 'badge-green' : 'badge-red'}`}>{a.passed ? '✓ Passed' : '✗ Failed'}</span></td>
+                    <td><span className={`badge ${a.passed ? 'badge-green' : 'badge-red'}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>{a.passed ? <><Check size={12} /> Passed</> : <><X size={12} /> Failed</>}</span></td>
                     <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>{new Date(a.submitted_at).toLocaleDateString()}</td>
                     <td><Link to={`/aptitude-tests/result/${a.id}`} className="btn btn-secondary btn-sm">View</Link></td>
                   </tr>

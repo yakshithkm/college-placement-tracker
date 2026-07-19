@@ -118,7 +118,7 @@ a:hover { text-decoration: underline; }
 }
 .nav-item:hover { background: var(--bg-tertiary); color: var(--text-primary); text-decoration: none; }
 .nav-item.active { background: var(--color-primary-light); color: var(--color-primary); }
-.nav-item .nav-icon { font-size: 18px; width: 20px; text-align: center; }
+.nav-item .nav-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
 .sidebar-footer {
   padding: 16px 12px;
@@ -431,7 +431,8 @@ a:hover { text-decoration: underline; }
   text-align: center; padding: 60px 20px;
   color: var(--text-muted);
 }
-.empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state-icon { margin-bottom: 16px; display: flex; justify-content: center; color: var(--text-muted); }
+.empty-state-icon svg { width: 48px; height: 48px; stroke-width: 1.5; }
 .empty-state h3 { font-size: 18px; color: var(--text-secondary); margin-bottom: 8px; }
 .empty-state p { font-size: 14px; }
 
@@ -562,7 +563,8 @@ a:hover { text-decoration: underline; }
 .landing-features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .landing-feature-card { transition: transform 0.2s, box-shadow 0.2s; }
 .landing-feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-.landing-feature-icon { font-size: 32px; margin-bottom: 14px; }
+.landing-feature-icon { margin-bottom: 14px; color: #2563EB; }
+.landing-feature-icon svg { width: 32px; height: 32px; stroke-width: 1.75; }
 .landing-feature-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
 .landing-feature-desc { font-size: 14px; color: #64748B; line-height: 1.65; white-space: pre-line; }
 

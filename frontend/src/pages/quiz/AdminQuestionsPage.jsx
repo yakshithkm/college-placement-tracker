@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { aptitudeTestAPI } from '../../services/api';
 import toast from 'react-hot-toast';
+import { Upload, HelpCircle, Trash2 } from 'lucide-react';
 
 const emptyForm = { categoryId: '', questionText: '', optionA: '', optionB: '', optionC: '', optionD: '', correctAnswer: 'A', explanation: '', difficulty: 'medium', marks: 1, negativeMarks: 0 };
 
@@ -33,7 +34,7 @@ function QuestionModal({ question, categories, onClose }) {
               <label className="form-label">Category <span className="required">*</span></label>
               <select className="form-select" required value={form.categoryId} onChange={set('categoryId')}>
                 <option value="">Select category...</option>
-                {categories.map(c => <option key={c.id} value={c.id}>{c.icon} {c.name}</option>)}
+                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
             <div className="form-group">
@@ -171,7 +172,7 @@ export default function AdminQuestionsPage() {
           <div className="page-subtitle">Manage the aptitude question bank</div>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <button className="btn btn-secondary" onClick={() => setShowImport(true)}>📥 Bulk Import (JSON)</button>
+          <button className="btn btn-secondary" onClick={() => setShowImport(true)} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Upload size={15} /> Bulk Import (JSON)</button>
           <button className="btn btn-primary" onClick={() => setModal('add')}>+ Add Question</button>
         </div>
       </div>
@@ -181,7 +182,7 @@ export default function AdminQuestionsPage() {
           <input className="form-input" style={{ flex: '1 1 200px' }} placeholder="Search questions..." value={filters.search} onChange={e => setFilters(f => ({ ...f, search: e.target.value }))} />
           <select className="form-select" style={{ flex: '0 1 200px' }} value={filters.categoryId} onChange={e => setFilters(f => ({ ...f, categoryId: e.target.value }))}>
             <option value="">All categories</option>
-            {categories.map(c => <option key={c.id} value={c.id}>{c.icon} {c.name}</option>)}
+            {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
           <select className="form-select" style={{ flex: '0 1 160px' }} value={filters.difficulty} onChange={e => setFilters(f => ({ ...f, difficulty: e.target.value }))}>
             <option value="">All difficulties</option>
@@ -195,7 +196,7 @@ export default function AdminQuestionsPage() {
         {isLoading ? (
           <div className="page-loading"><div className="loading-spinner" /></div>
         ) : questions.length === 0 ? (
-          <div className="empty-state"><div className="empty-state-icon">❓</div><h3>No questions found</h3></div>
+          <div className="empty-state"><div className="empty-state-icon"><HelpCircle /></div><h3>No questions found</h3></div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {questions.map(q => (
@@ -208,7 +209,7 @@ export default function AdminQuestionsPage() {
                   </div>
                   <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
                     <button className="btn btn-secondary btn-sm" onClick={() => setModal(q)}>Edit</button>
-                    <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(q.id)}>🗑</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(q.id)}><Trash2 size={14} /></button>
                   </div>
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 6 }}>{q.question_text}</div>

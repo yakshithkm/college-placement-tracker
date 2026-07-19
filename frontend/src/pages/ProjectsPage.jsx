@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { projectsAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import { Code2, Star, Github, ExternalLink } from 'lucide-react';
 
 const emptyForm = { title: '', description: '', technologies: '', githubUrl: '', liveUrl: '', startDate: '', endDate: '', isFeatured: false };
 
@@ -118,7 +119,7 @@ export default function ProjectsPage() {
       ) : projects.length === 0 ? (
         <div className="card">
           <div className="empty-state">
-            <div className="empty-state-icon">💻</div>
+            <div className="empty-state-icon"><Code2 /></div>
             <h3>No projects yet</h3>
             <p>Add your projects to strengthen your placement profile</p>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => setModal('add')}>Add Your First Project</button>
@@ -130,7 +131,7 @@ export default function ProjectsPage() {
             <div key={p.id} className="card" style={{ position: 'relative', borderTop: p.is_featured ? '3px solid var(--color-primary)' : undefined }}>
               {p.is_featured && (
                 <div style={{ position: 'absolute', top: -1, right: 16 }}>
-                  <span className="badge badge-blue" style={{ fontSize: 11 }}>⭐ Featured</span>
+                  <span className="badge badge-blue" style={{ fontSize: 11, display: "inline-flex", alignItems: "center", gap: 4 }}><Star size={12} /> Featured</span>
                 </div>
               )}
               <div style={{ marginBottom: 12 }}>
@@ -146,8 +147,8 @@ export default function ProjectsPage() {
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  {p.github_url && <a href={p.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">⌥ GitHub</a>}
-                  {p.live_url && <a href={p.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">🔗 Live</a>}
+                  {p.github_url && <a href={p.github_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Github size={14} /> GitHub</a>}
+                  {p.live_url && <a href={p.live_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ExternalLink size={14} /> Live</a>}
                 </div>
               </div>
               <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, display: 'flex', gap: 8, justifyContent: 'flex-end', flexWrap: 'wrap' }}>

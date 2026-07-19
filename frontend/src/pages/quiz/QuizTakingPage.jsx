@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { aptitudeTestAPI } from '../../services/api';
 import toast from 'react-hot-toast';
+import { Timer, BookOpen, Flag, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 
 export default function QuizTakingPage() {
   const { testId } = useParams();
@@ -154,7 +155,9 @@ export default function QuizTakingPage() {
           <div>
             <div style={{ fontWeight: 700, fontSize: 15 }}>Question {currentIdx + 1} of {questions.length}</div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-              {mode === 'timed' ? '⏱ Timed Mode' : '🧘 Practice Mode'} · {answeredCount}/{questions.length} answered
+              {mode === 'timed'
+                ? <><Timer size={12} style={{ verticalAlign: -2 }} /> Timed Mode</>
+                : <><BookOpen size={12} style={{ verticalAlign: -2 }} /> Practice Mode</>} · {answeredCount}/{questions.length} answered
             </div>
           </div>
           {mode === 'timed' && secondsLeft !== null && (
@@ -164,7 +167,7 @@ export default function QuizTakingPage() {
               background: secondsLeft < 60 ? 'var(--color-danger-light)' : 'var(--color-primary-light)',
               color: secondsLeft < 60 ? 'var(--color-danger)' : 'var(--color-primary)',
             }}>
-              ⏱ {formatTime(secondsLeft)}
+              <Timer size={18} style={{ verticalAlign: -3, marginRight: 6 }} />{formatTime(secondsLeft)}
             </div>
           )}
         </div>
@@ -183,7 +186,7 @@ export default function QuizTakingPage() {
               style={{ background: flagged[current.id] ? 'var(--color-warning)' : 'var(--bg-tertiary)', color: flagged[current.id] ? 'white' : 'var(--text-primary)', border: 'none' }}
               onClick={() => toggleFlag(current.id)}
             >
-              🚩 {flagged[current.id] ? 'Flagged' : 'Flag for review'}
+              <Flag size={13} style={{ verticalAlign: -2, marginRight: 4 }} />{flagged[current.id] ? 'Flagged' : 'Flag for review'}
             </button>
           </div>
 
@@ -219,15 +222,15 @@ export default function QuizTakingPage() {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
             <button className="btn btn-secondary" disabled={currentIdx === 0} onClick={() => setCurrentIdx(i => i - 1)}>
-              ← Previous
+              <ArrowLeft size={14} style={{ verticalAlign: -2, marginRight: 4 }} />Previous
             </button>
             {currentIdx < questions.length - 1 ? (
               <button className="btn btn-primary" onClick={() => setCurrentIdx(i => i + 1)}>
-                Next →
+                Next<ArrowRight size={14} style={{ verticalAlign: -2, marginLeft: 4 }} />
               </button>
             ) : (
               <button className="btn" style={{ background: 'var(--color-success)', color: 'white' }} onClick={onSubmitClick} disabled={submitting}>
-                {submitting ? 'Submitting...' : '✓ Submit Test'}
+                {submitting ? 'Submitting...' : <><Check size={14} style={{ verticalAlign: -2, marginRight: 4 }} />Submit Test</>}
               </button>
             )}
           </div>
@@ -267,7 +270,7 @@ export default function QuizTakingPage() {
             onClick={onSubmitClick}
             disabled={submitting}
           >
-            {submitting ? 'Submitting...' : '✓ Submit Test'}
+            {submitting ? 'Submitting...' : <><Check size={14} style={{ verticalAlign: -2, marginRight: 4 }} />Submit Test</>}
           </button>
         </div>
       </div>

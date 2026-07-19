@@ -4,6 +4,7 @@ import { interviewsAPI } from '../services/api';
 import { Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import toast from 'react-hot-toast';
+import { Mic, Trash2 } from 'lucide-react';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -153,7 +154,7 @@ export default function InterviewPage() {
           <div className="page-loading"><div className="loading-spinner" /></div>
         ) : scores.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">🎤</div>
+            <div className="empty-state-icon"><Mic /></div>
             <h3>No interviews recorded</h3>
             <p>Start logging mock interviews to track your readiness</p>
           </div>
@@ -172,7 +173,7 @@ export default function InterviewPage() {
                     <td>{s.hr_rating ?? '—'}/10</td>
                     <td><strong style={{ color: s.overall_rating >= 7 ? 'var(--color-success)' : 'var(--color-warning)' }}>{s.overall_rating ? parseFloat(s.overall_rating).toFixed(1) : '—'}</strong></td>
                     <td style={{ maxWidth: 160, fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.feedback?.slice(0, 60) || '—'}{s.feedback?.length > 60 && '...'}</td>
-                    <td><button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(s.id)}>🗑</button></td>
+                    <td><button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(s.id)}><Trash2 size={14} /></button></td>
                   </tr>
                 ))}
               </tbody>

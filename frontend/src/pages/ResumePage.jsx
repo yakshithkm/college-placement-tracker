@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { resumesAPI, getFileUrl } from '../services/api';
 import toast from 'react-hot-toast';
+import { FileText, CheckCircle2, Eye, Trash2 } from 'lucide-react';
 
 function formatBytes(bytes) {
   if (!bytes) return '—';
@@ -79,7 +80,7 @@ export default function ResumePage() {
           onDragLeave={() => setDragging(false)}
           onDrop={handleDrop}
         >
-          <div style={{ fontSize: 36, marginBottom: 12 }}>📄</div>
+          <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center', color: 'var(--text-muted)' }}><FileText size={36} strokeWidth={1.5} /></div>
           <div style={{ fontWeight: 600, marginBottom: 6 }}>
             {uploadMutation.isPending ? 'Uploading...' : 'Drop your PDF here or click to browse'}
           </div>
@@ -98,7 +99,7 @@ export default function ResumePage() {
           <div className="page-loading"><div className="loading-spinner" /></div>
         ) : resumes.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">📄</div>
+            <div className="empty-state-icon"><FileText /></div>
             <h3>No resumes yet</h3>
             <p>Upload your first resume to get started</p>
           </div>
@@ -111,11 +112,11 @@ export default function ResumePage() {
                 borderRadius: 8, flexWrap: 'wrap',
                 background: r.is_active ? 'var(--color-primary-light)' : 'var(--bg-primary)',
               }}>
-                <div style={{ fontSize: 28 }}>📄</div>
+                <div style={{ color: 'var(--text-secondary)' }}><FileText size={28} /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
                     <span style={{ fontWeight: 600, fontSize: 15, wordBreak: 'break-word' }}>{r.version_name}</span>
-                    {r.is_active && <span className="badge badge-blue">✓ Active</span>}
+                    {r.is_active && <span className="badge badge-blue" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><CheckCircle2 size={12} /> Active</span>}
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                     {formatBytes(r.file_size)} · Uploaded {new Date(r.uploaded_at).toLocaleDateString()}
@@ -126,7 +127,8 @@ export default function ResumePage() {
                   <a
                     href={getFileUrl(r.file_url)} target="_blank" rel="noopener noreferrer"
                     className="btn btn-secondary btn-sm"
-                  >👁 View</a>
+                    style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+                  ><Eye size={14} /> View</a>
                   {!r.is_active && (
                     <button className="btn btn-primary btn-sm" onClick={() => activateMutation.mutate(r.id)}>
                       Set Active
@@ -134,7 +136,7 @@ export default function ResumePage() {
                   )}
                   <button className="btn btn-danger btn-sm" onClick={() => {
                     if (window.confirm('Delete this resume?')) deleteMutation.mutate(r.id);
-                  }}>🗑</button>
+                  }}><Trash2 size={14} /></button>
                 </div>
               </div>
             ))}

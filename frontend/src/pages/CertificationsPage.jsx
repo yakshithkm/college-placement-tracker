@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { certsAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import { Award, Medal, ExternalLink } from 'lucide-react';
 
 const emptyForm = { name: '', provider: '', issueDate: '', expiryDate: '', credentialId: '', verificationUrl: '' };
 
@@ -101,7 +102,7 @@ export default function CertificationsPage() {
       ) : certs.length === 0 ? (
         <div className="card">
           <div className="empty-state">
-            <div className="empty-state-icon">🏆</div>
+            <div className="empty-state-icon"><Award /></div>
             <h3>No certifications yet</h3>
             <p>Add certifications to validate your skills and boost your placement score</p>
             <button className="btn btn-primary" style={{ marginTop: 16 }} onClick={() => setModal('add')}>Add Certification</button>
@@ -115,7 +116,7 @@ export default function CertificationsPage() {
             return (
               <div key={c.id} className="card" style={{ borderLeft: `4px solid ${color}`, position: 'relative' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: color + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>🏅</div>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, background: color + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}><Medal size={22} /></div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2 }}>{c.name}</div>
                     <div style={{ fontSize: 13, color, fontWeight: 600, marginBottom: 6 }}>{c.provider}</div>
@@ -128,7 +129,7 @@ export default function CertificationsPage() {
                 </div>
                 {isExpired && <span className="badge badge-red" style={{ marginTop: 10, display: 'inline-flex' }}>Expired</span>}
                 <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 12, marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {c.verification_url && <a href={c.verification_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">🔗 Verify</a>}
+                  {c.verification_url && <a href={c.verification_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ExternalLink size={14} /> Verify</a>}
                   <button className="btn btn-secondary btn-sm" onClick={() => setModal(c)}>Edit</button>
                   <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(c.id)}>Delete</button>
                 </div>

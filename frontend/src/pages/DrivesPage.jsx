@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { drivesAPI, companiesAPI, applicationsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { Building2, Briefcase, IndianRupee, Users, CalendarClock, Calendar } from 'lucide-react';
 
 const STATUS_COLORS = {
   upcoming: 'badge-blue', active: 'badge-green', completed: 'badge-gray', cancelled: 'badge-red',
@@ -126,7 +127,7 @@ export default function DrivesPage() {
         <div className="page-loading"><div className="loading-spinner" /></div>
       ) : drives.length === 0 ? (
         <div className="card"><div className="empty-state">
-          <div className="empty-state-icon">🏢</div>
+          <div className="empty-state-icon"><Building2 /></div>
           <h3>No drives found</h3>
           <p>{isCoord ? 'Create the first placement drive' : 'Check back soon for placement opportunities'}</p>
         </div></div>
@@ -137,7 +138,7 @@ export default function DrivesPage() {
             return (
               <div key={d.id} className="card" style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 14 }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 10, background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>🏢</div>
+                  <div style={{ width: 48, height: 48, borderRadius: 10, background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', flexShrink: 0 }}><Building2 size={22} /></div>
                   <div style={{ flex: 1 }}>
                     <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 2 }}>{d.title}</h3>
                     <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>{d.company_name}</div>
@@ -147,16 +148,16 @@ export default function DrivesPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 14 }}>
-                  <span className="badge badge-green">💼 {d.role}</span>
-                  {d.package_lpa && <span className="badge badge-purple">💰 {d.package_lpa} LPA</span>}
-                  {d.application_count > 0 && <span className="badge badge-gray">👥 {d.application_count} applicants</span>}
+                  <span className="badge badge-green" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Briefcase size={13} /> {d.role}</span>
+                  {d.package_lpa && <span className="badge badge-purple" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><IndianRupee size={13} /> {d.package_lpa} LPA</span>}
+                  {d.application_count > 0 && <span className="badge badge-gray" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Users size={13} /> {d.application_count} applicants</span>}
                 </div>
 
                 {d.description && <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 14 }}>{d.description.slice(0, 120)}{d.description.length > 120 && '...'}</p>}
 
                 <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>
-                  {d.registration_deadline && <div>🗓 Deadline: {new Date(d.registration_deadline).toLocaleDateString()} {isPast && <span style={{ color: 'var(--color-danger)' }}>(Closed)</span>}</div>}
-                  {d.drive_date && <div>📅 Drive: {new Date(d.drive_date).toLocaleDateString()}</div>}
+                  {d.registration_deadline && <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><CalendarClock size={13} /> Deadline: {new Date(d.registration_deadline).toLocaleDateString()} {isPast && <span style={{ color: 'var(--color-danger)' }}>(Closed)</span>}</div>}
+                  {d.drive_date && <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Calendar size={13} /> Drive: {new Date(d.drive_date).toLocaleDateString()}</div>}
                 </div>
 
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>

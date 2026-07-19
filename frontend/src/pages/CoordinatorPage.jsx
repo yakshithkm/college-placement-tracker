@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { analyticsAPI, studentsAPI } from '../services/api';
+import { GraduationCap, CheckCircle2, Send, PartyPopper, BarChart3, Settings } from 'lucide-react';
 
 export function CoordinatorPage() {
   const { data: stats, isLoading } = useQuery({
@@ -17,14 +18,14 @@ export function CoordinatorPage() {
 
       <div className="stats-grid" style={{ marginBottom: 24 }}>
         {[
-          { label: 'Total Students', val: stats?.totalStudents, color: '#2563EB', bg: '#EFF6FF', icon: '🎓' },
-          { label: 'Eligible Students', val: stats?.eligibleStudents, color: '#059669', bg: '#ECFDF5', icon: '✅' },
-          { label: 'Students Applied', val: stats?.studentsApplied, color: '#7C3AED', bg: '#F5F3FF', icon: '📤' },
-          { label: 'Students Selected', val: stats?.studentsSelected, color: '#EA580C', bg: '#FFF7ED', icon: '🎊' },
-          { label: 'Avg Readiness Score', val: stats?.avgReadinessScore + '%', color: '#0891B2', bg: '#ECFEFF', icon: '📊' },
+          { label: 'Total Students', val: stats?.totalStudents, color: '#2563EB', bg: '#EFF6FF', icon: <GraduationCap size={20} /> },
+          { label: 'Eligible Students', val: stats?.eligibleStudents, color: '#059669', bg: '#ECFDF5', icon: <CheckCircle2 size={20} /> },
+          { label: 'Students Applied', val: stats?.studentsApplied, color: '#7C3AED', bg: '#F5F3FF', icon: <Send size={20} /> },
+          { label: 'Students Selected', val: stats?.studentsSelected, color: '#EA580C', bg: '#FFF7ED', icon: <PartyPopper size={20} /> },
+          { label: 'Avg Readiness Score', val: stats?.avgReadinessScore + '%', color: '#0891B2', bg: '#ECFEFF', icon: <BarChart3 size={20} /> },
         ].map(s => (
           <div key={s.label} className="stat-card">
-            <div className="stat-icon" style={{ background: s.bg, fontSize: 22 }}>{s.icon}</div>
+            <div className="stat-icon" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
             <div className="stat-value" style={{ color: s.color }}>{s.val ?? '—'}</div>
             <div className="stat-label">{s.label}</div>
           </div>
@@ -90,7 +91,10 @@ export function AdminPage() {
       <div className="page-subtitle">Manage students, companies, and platform settings</div>
 
       <div className="tabs">
-        {[['students', '🎓 Students'], ['overview', '📊 Overview']].map(([k, l]) => (
+        {[
+          ['students', <><GraduationCap size={15} style={{ verticalAlign: -3, marginRight: 4 }} />Students</>],
+          ['overview', <><BarChart3 size={15} style={{ verticalAlign: -3, marginRight: 4 }} />Overview</>],
+        ].map(([k, l]) => (
           <button key={k} className={`tab ${tab === k ? 'active' : ''}`} onClick={() => setTab(k)}>{l}</button>
         ))}
       </div>
@@ -146,7 +150,7 @@ export function AdminPage() {
       {tab === 'overview' && (
         <div className="card">
           <div style={{ padding: '20px 0', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <div style={{ fontSize: 48, marginBottom: 12 }}>⚙️</div>
+            <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}><Settings size={48} strokeWidth={1.5} /></div>
             <h3 style={{ marginBottom: 8 }}>Admin Controls</h3>
             <p>Platform configuration, data exports, and system settings would go here.</p>
           </div>

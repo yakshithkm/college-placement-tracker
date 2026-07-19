@@ -2,52 +2,57 @@ import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import HamburgerIcon from './HamburgerIcon';
+import {
+  LayoutDashboard, TrendingUp, User, FileText, Code2, Award,
+  Calculator, ClipboardList, Mic, Building2, ListChecks,
+  HelpCircle, Settings, LogOut,
+} from 'lucide-react';
 
 const StudentNav = () => (
   <>
     <div className="nav-section">
       <div className="nav-section-title">Overview</div>
       <NavLink to="/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📊</span> Dashboard
+        <LayoutDashboard className="nav-icon" size={18} /> Dashboard
       </NavLink>
       <NavLink to="/analytics" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📈</span> Analytics
+        <TrendingUp className="nav-icon" size={18} /> Analytics
       </NavLink>
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Profile</div>
       <NavLink to="/profile" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">👤</span> My Profile
+        <User className="nav-icon" size={18} /> My Profile
       </NavLink>
       <NavLink to="/resumes" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📄</span> Resumes
+        <FileText className="nav-icon" size={18} /> Resumes
       </NavLink>
       <NavLink to="/projects" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">💻</span> Projects
+        <Code2 className="nav-icon" size={18} /> Projects
       </NavLink>
       <NavLink to="/certifications" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🏆</span> Certifications
+        <Award className="nav-icon" size={18} /> Certifications
       </NavLink>
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Preparation</div>
       <NavLink to="/aptitude-tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🧮</span> Aptitude Test Module
+        <Calculator className="nav-icon" size={18} /> Aptitude Test Module
       </NavLink>
       <NavLink to="/aptitude" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📝</span> Manual Score Log
+        <ClipboardList className="nav-icon" size={18} /> Manual Score Log
       </NavLink>
       <NavLink to="/interviews" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🎤</span> Interview Scores
+        <Mic className="nav-icon" size={18} /> Interview Scores
       </NavLink>
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Placements</div>
       <NavLink to="/drives" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🏢</span> Drives
+        <Building2 className="nav-icon" size={18} /> Drives
       </NavLink>
       <NavLink to="/applications" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📋</span> Applications
+        <ListChecks className="nav-icon" size={18} /> Applications
       </NavLink>
     </div>
   </>
@@ -58,22 +63,22 @@ const CoordinatorNav = () => (
     <div className="nav-section">
       <div className="nav-section-title">Coordinator</div>
       <NavLink to="/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📊</span> Dashboard
+        <LayoutDashboard className="nav-icon" size={18} /> Dashboard
       </NavLink>
       <NavLink to="/coordinator" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📈</span> Statistics
+        <TrendingUp className="nav-icon" size={18} /> Statistics
       </NavLink>
       <NavLink to="/drives" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🏢</span> Placement Drives
+        <Building2 className="nav-icon" size={18} /> Placement Drives
       </NavLink>
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Aptitude Test Module</div>
       <NavLink to="/aptitude-tests/admin/tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🧮</span> Manage Tests
+        <Calculator className="nav-icon" size={18} /> Manage Tests
       </NavLink>
       <NavLink to="/aptitude-tests/admin/questions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">❓</span> Question Bank
+        <HelpCircle className="nav-icon" size={18} /> Question Bank
       </NavLink>
     </div>
   </>
@@ -84,25 +89,25 @@ const AdminNav = () => (
     <div className="nav-section">
       <div className="nav-section-title">Admin</div>
       <NavLink to="/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📊</span> Dashboard
+        <LayoutDashboard className="nav-icon" size={18} /> Dashboard
       </NavLink>
       <NavLink to="/admin" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">⚙️</span> Administration
+        <Settings className="nav-icon" size={18} /> Administration
       </NavLink>
       <NavLink to="/coordinator" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">📈</span> Statistics
+        <TrendingUp className="nav-icon" size={18} /> Statistics
       </NavLink>
       <NavLink to="/drives" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🏢</span> Placement Drives
+        <Building2 className="nav-icon" size={18} /> Placement Drives
       </NavLink>
     </div>
     <div className="nav-section">
       <div className="nav-section-title">Aptitude Test Module</div>
       <NavLink to="/aptitude-tests/admin/tests" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">🧮</span> Manage Tests
+        <Calculator className="nav-icon" size={18} /> Manage Tests
       </NavLink>
       <NavLink to="/aptitude-tests/admin/questions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
-        <span className="nav-icon">❓</span> Question Bank
+        <HelpCircle className="nav-icon" size={18} /> Question Bank
       </NavLink>
     </div>
   </>
@@ -158,7 +163,7 @@ export default function AppLayout() {
             </div>
           </div>
           <button className="nav-item w-full" onClick={handleLogout}>
-            <span className="nav-icon">🚪</span> Sign Out
+            <LogOut className="nav-icon" size={18} /> Sign Out
           </button>
         </div>
       </aside>

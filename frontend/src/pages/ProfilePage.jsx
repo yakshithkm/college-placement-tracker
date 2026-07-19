@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { studentsAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import { Save } from 'lucide-react';
 
 export default function ProfilePage() {
   const qc = useQueryClient();
@@ -144,7 +145,7 @@ export default function ProfilePage() {
 
           <div style={{ marginTop: 8 }}>
             <button className="btn btn-primary w-full" onClick={() => updateMutation.mutate(form)} disabled={updateMutation.isPending}>
-              {updateMutation.isPending ? 'Saving...' : '💾 Save Profile'}
+              {updateMutation.isPending ? 'Saving...' : <><Save size={16} style={{ verticalAlign: -3, marginRight: 6 }} />Save Profile</>}
             </button>
           </div>
         </div>

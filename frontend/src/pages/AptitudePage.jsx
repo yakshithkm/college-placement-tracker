@@ -4,6 +4,7 @@ import { aptitudeAPI } from '../services/api';
 import { Bar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import toast from 'react-hot-toast';
+import { Calculator, Trash2 } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, Filler);
 
@@ -152,7 +153,7 @@ export default function AptitudePage() {
           <div className="page-loading"><div className="loading-spinner" /></div>
         ) : scores.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">🧮</div>
+            <div className="empty-state-icon"><Calculator /></div>
             <h3>No scores recorded</h3>
             <p>Start logging your aptitude test results</p>
           </div>
@@ -177,7 +178,7 @@ export default function AptitudePage() {
                     </td>
                     <td>{s.percentile ? s.percentile + 'th' : '—'}</td>
                     <td>
-                      <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(s.id)}>🗑</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => window.confirm('Delete?') && deleteMutation.mutate(s.id)}><Trash2 size={14} /></button>
                     </td>
                   </tr>
                 ))}

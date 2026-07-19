@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { BarChart3, Code2, Mic, Building2, ArrowLeft, ArrowRight, AlertTriangle } from 'lucide-react';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -33,10 +34,15 @@ export function LoginPage() {
             Get a comprehensive view of your placement preparation — from academics and projects to aptitude scores and interview performance.
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {['📊 Placement Readiness Score', '💻 Project & Certification Tracker', '🎤 Interview Performance Analytics', '🏢 Live Placement Drive Board'].map(f => (
-              <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15 }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#93C5FD', flexShrink: 0 }} />
-                {f}
+            {[
+              { icon: <BarChart3 size={16} />, label: 'Placement Readiness Score' },
+              { icon: <Code2 size={16} />, label: 'Project & Certification Tracker' },
+              { icon: <Mic size={16} />, label: 'Interview Performance Analytics' },
+              { icon: <Building2 size={16} />, label: 'Live Placement Drive Board' },
+            ].map(({ icon, label }) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15 }}>
+                {icon}
+                {label}
               </div>
             ))}
           </div>
@@ -45,7 +51,7 @@ export function LoginPage() {
 
       <div className="auth-right">
       <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none', marginBottom: 20 }}>
-        ← Back to Home
+        <ArrowLeft size={14} /> Back to Home
       </Link>
       <div style={{ marginBottom: 36 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 }}>
@@ -56,7 +62,7 @@ export function LoginPage() {
           <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Don't have an account? <Link to="/register">Create one</Link></p>
         </div>
 
-        {error && <div className="alert alert-danger" style={{ marginBottom: 20 }}>⚠️ {error}</div>}
+        {error && <div className="alert alert-danger" style={{ marginBottom: 20 }}><AlertTriangle size={14} style={{ verticalAlign: -2, marginRight: 6 }} />{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -71,7 +77,7 @@ export function LoginPage() {
           </div>
           <button className="btn btn-primary w-full" type="submit" disabled={loading}
             style={{ marginTop: 8, padding: '12px', fontSize: 15 }}>
-            {loading ? 'Signing in...' : 'Sign In →'}
+            {loading ? 'Signing in...' : <>Sign In <ArrowRight size={16} style={{ verticalAlign: -3, marginLeft: 4 }} /></>}
           </button>
         </form>
 
@@ -118,7 +124,7 @@ export function RegisterPage() {
 
       <div className="auth-right" style={{ overflowY: 'auto' }}>
         <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none', marginBottom: 20 }}>
-          ← Back to Home
+          <ArrowLeft size={14} /> Back to Home
         </Link>
         <div style={{ marginBottom: 32 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
@@ -129,7 +135,7 @@ export function RegisterPage() {
           <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Already have one? <Link to="/login">Sign in</Link></p>
         </div>
 
-        {error && <div className="alert alert-danger" style={{ marginBottom: 16 }}>⚠️ {error}</div>}
+        {error && <div className="alert alert-danger" style={{ marginBottom: 16 }}><AlertTriangle size={14} style={{ verticalAlign: -2, marginRight: 6 }} />{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-grid" style={{ marginBottom: 0 }}>
@@ -169,7 +175,7 @@ export function RegisterPage() {
           </div>
           <button className="btn btn-primary w-full" type="submit" disabled={loading}
             style={{ padding: '12px', fontSize: 15, marginTop: 4 }}>
-            {loading ? 'Creating account...' : 'Create Account →'}
+            {loading ? 'Creating account...' : <>Create Account <ArrowRight size={16} style={{ verticalAlign: -3, marginLeft: 4 }} /></>}
           </button>
         </form>
       </div>

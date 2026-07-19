@@ -3,6 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { analyticsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import {
+  PartyPopper, TrendingUp, Rocket, Calculator, Award, Code2,
+  ClipboardList, CheckCircle2, FileText, Mic, Building2, ArrowRight,
+} from 'lucide-react';
 
 function ScoreRing({ score, size = 140, color = '#2563EB' }) {
   const radius = (size - 16) / 2;
@@ -31,7 +35,7 @@ function ScoreRing({ score, size = 140, color = '#2563EB' }) {
 function StatCard({ icon, label, value, color, bg, link }) {
   const card = (
     <div className="stat-card">
-      <div className="stat-icon" style={{ background: bg, fontSize: 22 }}>{icon}</div>
+      <div className="stat-icon" style={{ background: bg, color }}>{icon}</div>
       <div className="stat-value" style={{ color }}>{value ?? '—'}</div>
       <div className="stat-label">{label}</div>
     </div>
@@ -45,7 +49,7 @@ function QuickAction({ icon, title, desc, to, color }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', borderRadius: 8, border: '1px solid var(--border-color)', background: 'var(--bg-primary)', cursor: 'pointer', transition: 'all 0.15s' }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.background = '#F8FAFC'; }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.background = 'var(--bg-primary)'; }}>
-        <div style={{ width: 40, height: 40, borderRadius: 8, background: color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{icon}</div>
+        <div style={{ width: 40, height: 40, borderRadius: 8, background: color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', color, flexShrink: 0 }}>{icon}</div>
         <div>
           <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{title}</div>
           <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{desc}</div>
@@ -69,9 +73,9 @@ export default function DashboardPage() {
         <div className="page-title">Welcome, {user?.firstName}!</div>
         <div className="page-subtitle">
           {user?.role === 'coordinator' ? (
-            <><Link to="/coordinator">View placement statistics →</Link></>
+            <><Link to="/coordinator">View placement statistics <ArrowRight size={13} style={{ verticalAlign: -2 }} /></Link></>
           ) : (
-            <><Link to="/admin">Go to admin panel →</Link></>
+            <><Link to="/admin">Go to admin panel <ArrowRight size={13} style={{ verticalAlign: -2 }} /></Link></>
           )}
         </div>
       </div>
@@ -97,9 +101,9 @@ export default function DashboardPage() {
             </div>
             <div style={{ flex: 1, minWidth: 260 }}>
               <h2 style={{ fontSize: 22, marginBottom: 6 }}>
-                {stats.readinessScore >= 80 ? '🎉 You\'re placement ready!' :
-                 stats.readinessScore >= 60 ? '📈 Almost there!' :
-                 '🚀 Let\'s build your profile!'}
+                {stats.readinessScore >= 80 ? <><PartyPopper size={22} style={{ verticalAlign: -4, marginRight: 6 }} />You're placement ready!</> :
+                 stats.readinessScore >= 60 ? <><TrendingUp size={22} style={{ verticalAlign: -4, marginRight: 6 }} />Almost there!</> :
+                 <><Rocket size={22} style={{ verticalAlign: -4, marginRight: 6 }} />Let's build your profile!</>}
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.7, marginBottom: 16 }}>
                 Your score is computed from academics, projects, certifications, aptitude, and interview performance.
@@ -128,11 +132,11 @@ export default function DashboardPage() {
 
           {/* Stats grid */}
           <div className="stats-grid">
-            <StatCard icon="🧮" label="Aptitude Tests Taken" value={stats.quizAttemptCount} color="#0891B2" bg="#ECFEFF" link="/aptitude-tests/history" />
-            <StatCard icon="🏆" label="Certifications" value={stats.certCount} color="#7C3AED" bg="#F5F3FF" link="/certifications" />
-            <StatCard icon="💻" label="Projects" value={stats.projectCount} color="#059669" bg="#ECFDF5" link="/projects" />
-            <StatCard icon="📋" label="Applications" value={stats.applicationCount} color="#2563EB" bg="#EFF6FF" link="/applications" />
-            <StatCard icon="✅" label="Offers Received" value={stats.selectedCount} color="#EA580C" bg="#FFF7ED" link="/applications" />
+            <StatCard icon={<Calculator size={20} />} label="Aptitude Tests Taken" value={stats.quizAttemptCount} color="#0891B2" bg="#ECFEFF" link="/aptitude-tests/history" />
+            <StatCard icon={<Award size={20} />} label="Certifications" value={stats.certCount} color="#7C3AED" bg="#F5F3FF" link="/certifications" />
+            <StatCard icon={<Code2 size={20} />} label="Projects" value={stats.projectCount} color="#059669" bg="#ECFDF5" link="/projects" />
+            <StatCard icon={<ClipboardList size={20} />} label="Applications" value={stats.applicationCount} color="#2563EB" bg="#EFF6FF" link="/applications" />
+            <StatCard icon={<CheckCircle2 size={20} />} label="Offers Received" value={stats.selectedCount} color="#EA580C" bg="#FFF7ED" link="/applications" />
           </div>
 
           {/* Quick Actions */}
@@ -141,13 +145,13 @@ export default function DashboardPage() {
               <h3 className="card-title">Quick Actions</h3>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 12 }}>
-              <QuickAction icon="🧮" title="Take Aptitude Test" desc="Attempt a quiz, build your score" to="/aptitude-tests" color="#0891B2" />
-              <QuickAction icon="📄" title="Upload Resume" desc="Add a new resume version" to="/resumes" color="#2563EB" />
-              <QuickAction icon="💻" title="Add Project" desc="Showcase your work" to="/projects" color="#059669" />
-              <QuickAction icon="🏆" title="Add Certification" desc="Validate your skills" to="/certifications" color="#7C3AED" />
-              <QuickAction icon="📝" title="Log Aptitude Score" desc="Manually record a score" to="/aptitude" color="#EA580C" />
-              <QuickAction icon="🎤" title="Add Interview" desc="Record mock interview" to="/interviews" color="#0891B2" />
-              <QuickAction icon="🏢" title="Browse Drives" desc="Find placement opportunities" to="/drives" color="#D97706" />
+              <QuickAction icon={<Calculator size={18} />} title="Take Aptitude Test" desc="Attempt a quiz, build your score" to="/aptitude-tests" color="#0891B2" />
+              <QuickAction icon={<FileText size={18} />} title="Upload Resume" desc="Add a new resume version" to="/resumes" color="#2563EB" />
+              <QuickAction icon={<Code2 size={18} />} title="Add Project" desc="Showcase your work" to="/projects" color="#059669" />
+              <QuickAction icon={<Award size={18} />} title="Add Certification" desc="Validate your skills" to="/certifications" color="#7C3AED" />
+              <QuickAction icon={<ClipboardList size={18} />} title="Log Aptitude Score" desc="Manually record a score" to="/aptitude" color="#EA580C" />
+              <QuickAction icon={<Mic size={18} />} title="Add Interview" desc="Record mock interview" to="/interviews" color="#0891B2" />
+              <QuickAction icon={<Building2 size={18} />} title="Browse Drives" desc="Find placement opportunities" to="/drives" color="#D97706" />
             </div>
           </div>
         </>
